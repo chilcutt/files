@@ -1,0 +1,20 @@
+#!/bin/sh
+
+RED='\033[0;31m'
+NO_COLOR='\033[0m'
+
+check_prettier () {
+  FILES=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.ts" | sed 's| |\\ |g')
+  [ -z "$FILES" ] && exit 0
+
+  PRETTIER_ERRORS=$(echo "$FILES" | xargs yarn run --silent prettier --list-different 2>/dev/null)
+
+  if [ -n "$PRETTIER_ERRORS" ]; then
+    echo "${RED}Prettier format issues detected${NO_COLOR}"
+    echo "$FILES" | xargs yarn run --silent prettier --write
+    exit 1
+  fi
+}
+
+check_prettier
+exit 0
