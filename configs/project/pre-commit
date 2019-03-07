@@ -1,20 +1,46 @@
-#!/bin/sh
+#!/usr/bin/env ruby
 
-RED='\033[0;31m'
-NO_COLOR='\033[0m'
+def red(string)
+  "\e[31m#{string}\e[0m"
+end
 
-check_prettier () {
-  FILES=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.ts" | sed 's| |\\ |g')
-  [ -z "$FILES" ] && exit 0
+def print_status(status)
+  puts
+  puts("=" * 50)
+  puts red(status)
+  puts("=" * 50)
+  puts
+end
 
-  PRETTIER_ERRORS=$(echo "$FILES" | xargs yarn run --silent prettier --list-different 2>/dev/null)
+files = `git diff --cached --name-only --diff-filter=ACM -- *.{rb,js,jsx,ts}`.split("\n")
+exit(0) if files.empty?
 
-  if [ -n "$PRETTIER_ERRORS" ]; then
-    echo "${RED}Prettier format issues detected${NO_COLOR}"
-    echo "$FILES" | xargs yarn run --silent prettier --write
-    exit 1
-  fi
-}
+has_errors = false
 
-check_prettier
-exit 0
+if (rb_files = files.select { |f| f.match(/.rb$/) }).any?
+  print_status("Auto-correcting rubocop...")
+  has_errors ||= !system("rubocop --format simple --auto-correct #{rb_files.join(" ")}")
+end
+
+if (js_files = files.select { |f| f.match(/.(?:js|jsx|ts)$/) }).any?
+  targets = js_files.join(" ")
+
+  if !system("yarn run --silent prettier --list-different #{targets} > /dev/null 2>&1")
+    print_status("Auto-correcting prettier...")
+    has_errors = true
+    system("yarn run --silent prettier --write #{targets}")
+  end
+
+  if !(system("yarn run --silent eslint #{targets} > /dev/null 2>&1"))
+    print_status("Auto-correcting eslint...")
+    has_errors = true
+    system("yarn run --silent eslint --fix #{targets}")
+  end
+end
+
+if has_errors
+  print_status("Errors detected, aborting commit...")
+  exit(1)
+end
+
+exit(0)
