@@ -1,45 +1,50 @@
 #!/usr/bin/env ruby
 
+require "open3"
+
 def red(string)
   "\e[31m#{string}\e[0m"
-end
-
-def print_status(status)
-  puts
-  puts("=" * 50)
-  puts red(status)
-  puts("=" * 50)
-  puts
 end
 
 files = `git diff --cached --name-only --diff-filter=ACM -- *.{rb,js,jsx,ts}`.split("\n")
 exit(0) if files.empty?
 
-has_errors = false
+errors = {}
 
 if (rb_files = files.select { |f| f.match(/.rb$/) }).any?
-  print_status("Auto-correcting rubocop...")
-  has_errors ||= !system("rubocop --format simple --fail-level autocorrect --auto-correct #{rb_files.join(" ")}")
+  puts "Checking rubocop..."
+  stdout, _, status = Open3.capture3("rubocop --format simple --fail-level autocorrect --auto-correct #{rb_files.join(" ")}")
+  unless status.success?
+    errors[:rubocop] = stdout
+  end
 end
 
 if (js_files = files.select { |f| f.match(/.(?:js|jsx|ts)$/) }).any?
   targets = js_files.join(" ")
 
-  if !system("yarn run --silent prettier --list-different #{targets} > /dev/null 2>&1")
-    print_status("Auto-correcting prettier...")
-    has_errors = true
-    system("yarn run --silent prettier --write #{targets}")
+  puts "Checking prettier..."
+  stdout, _, status = Open3.capture3("yarn run --silent prettier --list-different --write #{targets}")
+  unless status.success?
+    errors[:prettier] = stdout
   end
 
-  if !(system("yarn run --silent eslint #{targets} > /dev/null 2>&1"))
-    print_status("Auto-correcting eslint...")
-    has_errors = true
+  puts "Checking eslint..."
+  stdout, _, status = Open3.capture3("yarn run --silent eslint #{targets}")
+  unless status.success?
+    errors[:eslint] = stdout
     system("yarn run --silent eslint --fix #{targets}")
   end
 end
 
-if has_errors
-  print_status("Errors detected, aborting commit...")
+if errors.any?
+  puts
+  errors.each do |type, messages|
+    puts("=" * 50)
+    puts red("#{type} errors:")
+    puts messages
+    puts("=" * 50)
+    puts
+  end
   exit(1)
 end
 
