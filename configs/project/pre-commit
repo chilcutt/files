@@ -19,7 +19,7 @@ has_errors = false
 
 if (rb_files = files.select { |f| f.match(/.rb$/) }).any?
   print_status("Auto-correcting rubocop...")
-  has_errors ||= !system("rubocop --format simple --auto-correct #{rb_files.join(" ")}")
+  has_errors ||= !system("rubocop --format simple --fail-level autocorrect --auto-correct #{rb_files.join(" ")}")
 end
 
 if (js_files = files.select { |f| f.match(/.(?:js|jsx|ts)$/) }).any?
