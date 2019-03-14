@@ -1,0 +1,170 @@
+set nocompatible
+filetype plugin indent on
+syntax enable
+
+" Load Vundle and plugins
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic' " TODO - ALE
+Plugin 'tpope/vim-fugitive' " git integration
+Plugin 'tpope/vim-rhubarb' " github integration
+Plugin 'tpope/vim-surround' " surrounding movement
+"Plugin 'ctrlpvim/ctrlp.vim' " TODO - fzf
+"Plugin 'rking/ag.vim'
+Plugin 'majutsushi/tagbar' " fzf?
+Plugin 'ZoomWin' " ctrl+w o to zoom
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-commentary'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'benmills/vimux'
+Plugin 'sheerun/vim-polyglot' " highlighting and indentation
+Plugin 'docunext/closetag.vim' " close HTML tags
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'matchit.zip'
+Plugin 'jremmen/vim-ripgrep'
+Plugin 'prettier/vim-prettier'
+call vundle#end()
+
+set background=dark
+set number
+set nowrap
+set hlsearch
+set ignorecase
+set smartcase
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set cmdheight=2
+set hidden
+set laststatus=2 " always show the statusline
+set statusline+=%F " display the filename in the statusline
+set ttyfast " fast terminal, send characters quickly
+set lazyredraw " redraw less often
+set nrformats-=octal " remove octal from defaults, ctrl+a to add
+set wildmenu " tab completion
+set display+=lastline " show as much of lines as possible instead of @
+set listchars=tab:>\ ,trail:\.,extends:>,precedes:<,nbsp:+ " show whitespace
+"set list TODO
+set t_Co=16 " match bright colors without forcing bold
+
+" TODO from vim-sensible
+set autoindent
+set backspace=indent,eol,start
+set complete-=i
+set smarttab
+let g:html_indent_script1 = "auto"
+let g:html_indent_style1 = "auto"
+
+colorscheme solarized
+
+highlight Visual term=reverse cterm=reverse guibg=LightGrey
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
+
+" highlight all tabs in red
+autocmd ColorScheme * highlight AllTabs ctermbg=red guibg=red
+highlight AllTabs ctermbg=red guibg=red
+match AllTabs /\t/
+
+" highlight trailing whitespace
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { "mode": "active", "passive_filetypes": ["html"] } " disable syntax checking for html files, does not work well with components
+
+"" ctrlp
+"let g:ctrlp_use_caching = 0
+"if executable('ag')
+"  set grepprg=ag\ --nogroup\ --nocolor
+"  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+"else
+"  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+"  let g:ctrlp_prompt_mappings = { 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'] }
+"endif
+"let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git' " ignore generate files when searching
+
+"set grepprg=rg\ --vimgrep
+
+let g:fzf_layout = { 'down': '~20%' }
+
+" don't move on split
+nnoremap <C-w>s Hmx`` \|:split<cr>`xzt``
+nnoremap <C-w>v Hmx`` \|:vsplit<cr>`xzt``
+
+" always show bookmarks
+let NERDTreeShowBookmarks=1
+let g:tagbar_left = 1 " open tagbar on the left
+let g:tagbar_autoclose = 1 " close tagbar after selection
+let g:tagbar_autofocus = 1 " focus when opened
+let g:VimuxHeight = "25" "set vimux terminal height
+
+let mapleader = "\<Space>" " set leader to spacebar
+nmap <leader>w :w<cr>
+nmap <leader>q :q<cr>
+nmap <leader>x :x<cr>
+nmap <leader><space> <C-w><C-w>
+nmap <leader>h <C-w>h
+nmap <leader>j <C-w>j
+nmap <leader>k <C-w>k
+nmap <leader>l <C-w>l
+nmap <leader>v :vsp<cr><C-w>l
+nmap <leader>s :sp<cr><C-w>j
+nmap <leader>r :NERDTreeFind<cr>
+nmap <leader>d :NERDTreeToggle<cr>
+" nmap <c-t> :TagbarToggle<cr>
+nmap <leader>n :n<cr>
+nmap <leader>N :N<cr>
+nmap <leader>t :tabnew<cr>
+nmap <leader>f :Rg<space>
+nmap <leader>gs :Gstatus<cr>
+nmap <leader>gb :Gblame<cr>
+nmap <leader>gw :Gbrowse<cr> " open file in browser at Github
+xmap <leader>gw :Gbrowse<cr> " highlight lines
+nmap <leader>a :A<cr>
+nmap <leader>rf :call VimuxRunCommand("spring rspec " . bufname("%"))<cr>
+nmap <leader>rs :call VimuxRunCommand("spring rspec " . bufname("%") . ":" . line("."))<cr>
+nmap <leader>rbf :call VimuxRunCommand("bundle exec rspec " . bufname("%"))<cr>
+nmap <leader>rbs :call VimuxRunCommand("bundle exec rspec " . bufname("%") . ":" . line("."))<cr>
+nmap <leader>bb :VimuxCloseRunner<cr>
+nmap <leader>bc :VimuxPromptCommand<cr>
+nmap <leader>br :VimuxRunLastCommand<cr>
+nmap <leader>o o<esc>
+nmap <leader>O O<esc>
+nmap <silent> <leader>y :w !pbcopy<cr><cr>
+vmap <silent> <leader>y :w !pbcopy<cr><cr>
+xmap <leader>/ <Plug>Commentary<cr>
+nmap <leader>/ <Plug>CommentaryLine<cr>
+inoremap jk <esc> " set jk to escape to normal mode
+nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L> " clear hlsearch with ctrl+l
+nnoremap <silent> <C-P> :Files<cr>
+noremap <leader>z :tab split<cr>
+noremap <leader>Q :q \| tabprevious<cr>
+
+autocmd BufNewFile,BufRead *.es6,*.ts,*.tsx set filetype=javascript
+
+let g:vim_json_syntax_conceal = 0 " don't do weird shit in json files
+
+let g:jsx_ext_required = 0 " handle jsx in js files
+
+" ripgrep configuration
+let g:rg_highlight=1
+
+
+let g:polyglot_disabled = ['graphql']
