@@ -154,8 +154,6 @@ nmap <leader>/ <Plug>CommentaryLine<cr>
 inoremap jk <esc> " set jk to escape to normal mode
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L> " clear hlsearch with ctrl+l
 nnoremap <silent> <C-P> :Files<cr>
-noremap <leader>z :tab split<cr>
-noremap <leader>Q :q \| tabprevious<cr>
 
 autocmd BufNewFile,BufRead *.es6,*.ts,*.tsx set filetype=javascript
 
