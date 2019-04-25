@@ -25,7 +25,6 @@ Plugin 'sheerun/vim-polyglot' " highlighting and indentation
 Plugin 'docunext/closetag.vim' " close HTML tags
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
-Plugin 'jiangmiao/auto-pairs'
 Plugin 'matchit.zip'
 Plugin 'jremmen/vim-ripgrep'
 Plugin 'prettier/vim-prettier'
