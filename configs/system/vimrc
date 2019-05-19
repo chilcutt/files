@@ -2,35 +2,33 @@ set nocompatible
 filetype plugin indent on
 syntax enable
 
-" Load Vundle and plugins
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic' " TODO - ALE
-Plugin 'tpope/vim-fugitive' " git integration
-Plugin 'tpope/vim-rhubarb' " github integration
-Plugin 'tpope/vim-surround' " surrounding movement
+call plug#begin('~/.vim/plugged')
+Plug 'gmarik/Vundle.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic' " TODO - ALE
+Plug 'tpope/vim-fugitive' " git integration
+Plug 'tpope/vim-rhubarb' " github integration
+Plug 'tpope/vim-surround' " surrounding movement
 "Plugin 'ctrlpvim/ctrlp.vim' " TODO - fzf
 "Plugin 'rking/ag.vim'
-Plugin 'majutsushi/tagbar' " fzf?
-Plugin 'ZoomWin' " ctrl+w o to zoom
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-rake'
-Plugin 'tpope/vim-commentary'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'benmills/vimux'
-Plugin 'sheerun/vim-polyglot' " highlighting and indentation
-Plugin 'docunext/closetag.vim' " close HTML tags
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-Plugin 'matchit.zip'
-Plugin 'jremmen/vim-ripgrep'
-Plugin 'prettier/vim-prettier'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tommcdo/vim-lion'
-call vundle#end()
+Plug 'majutsushi/tagbar' " fzf?
+Plug 'vim-scripts/ZoomWin' " ctrl+w o to zoom
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-commentary'
+Plug 'altercation/vim-colors-solarized'
+Plug 'benmills/vimux'
+Plug 'sheerun/vim-polyglot' " highlighting and indentation
+Plug 'docunext/closetag.vim' " close HTML tags
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'vim-scripts/matchit.zip'
+Plug 'jremmen/vim-ripgrep'
+Plug 'prettier/vim-prettier'
+Plug 'airblade/vim-gitgutter'
+Plug 'tommcdo/vim-lion'
+call plug#end()
 
 set background=dark
 set number
