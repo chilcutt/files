@@ -28,6 +28,7 @@ Plugin 'junegunn/fzf.vim'
 Plugin 'matchit.zip'
 Plugin 'jremmen/vim-ripgrep'
 Plugin 'prettier/vim-prettier'
+Plugin 'airblade/vim-gitgutter'
 call vundle#end()
 
 set background=dark
@@ -135,7 +136,7 @@ nmap <leader>n :n<cr>
 nmap <leader>N :N<cr>
 nmap <leader>t :tabnew<cr>
 nmap <leader>f :Find<space>
-nmap <leader>gs :Gstatus<cr>
+nmap <leader>gs :GitGutterToggle<cr>
 nmap <leader>gb :Gblame<cr>
 nmap <leader>gw :Gbrowse<cr> " open file in browser at Github
 xmap <leader>gw :Gbrowse<cr> " highlight lines
@@ -172,3 +173,8 @@ let g:rg_highlight=1
 
 
 let g:polyglot_disabled = ['graphql']
+
+" vim-gitgutter
+let g:gitgutter_enabled = 0 " disable by default
+set signcolumn=yes
+set updatetime=100 " write swp faster, to trigger faster git status reaction
