@@ -103,6 +103,9 @@ let g:syntastic_mode_map = { "mode": "active", "passive_filetypes": ["html"] } "
 
 let g:fzf_layout = { 'down': '~20%' }
 
+" use fzf and rg for advanced find
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
+
 " don't move on split
 nnoremap <C-w>s Hmx`` \|:split<cr>`xzt``
 nnoremap <C-w>v Hmx`` \|:vsplit<cr>`xzt``
@@ -131,12 +134,12 @@ nmap <leader>d :NERDTreeToggle<cr>
 nmap <leader>n :n<cr>
 nmap <leader>N :N<cr>
 nmap <leader>t :tabnew<cr>
-nmap <leader>f :Rg<space>
+nmap <leader>f :Find<space>
 nmap <leader>gs :Gstatus<cr>
 nmap <leader>gb :Gblame<cr>
 nmap <leader>gw :Gbrowse<cr> " open file in browser at Github
 xmap <leader>gw :Gbrowse<cr> " highlight lines
-nmap <leader>a :A<cr>
+nmap <leader>g :Rg<space>
 nmap <leader>rf :call VimuxRunCommand("spring rspec " . bufname("%"))<cr>
 nmap <leader>rs :call VimuxRunCommand("spring rspec " . bufname("%") . ":" . line("."))<cr>
 nmap <leader>rbf :call VimuxRunCommand("bundle exec rspec " . bufname("%"))<cr>
