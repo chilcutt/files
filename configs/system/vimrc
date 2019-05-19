@@ -9,8 +9,6 @@ Plug 'scrooloose/syntastic' " TODO - ALE
 Plug 'tpope/vim-fugitive' " git integration
 Plug 'tpope/vim-rhubarb' " github integration
 Plug 'tpope/vim-surround' " surrounding movement
-"Plugin 'ctrlpvim/ctrlp.vim' " TODO - fzf
-"Plugin 'rking/ag.vim'
 Plug 'majutsushi/tagbar' " fzf?
 Plug 'vim-scripts/ZoomWin' " ctrl+w o to zoom
 Plug 'tpope/vim-endwise'
