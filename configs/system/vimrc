@@ -149,6 +149,10 @@ nmap <leader>bc :VimuxPromptCommand<cr>
 nmap <leader>br :VimuxRunLastCommand<cr>
 nmap <leader>o o<esc>
 nmap <leader>O O<esc>
+nmap <leader>y "+y
+nmap <leader>p "+p
+
+
 nmap <silent> <leader>y :w !pbcopy<cr><cr>
 vmap <silent> <leader>y :w !pbcopy<cr><cr>
 xmap <leader>/ <Plug>Commentary<cr>
