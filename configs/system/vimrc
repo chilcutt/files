@@ -25,6 +25,8 @@ Plug 'jremmen/vim-ripgrep'
 Plug 'prettier/vim-prettier'
 Plug 'airblade/vim-gitgutter'
 Plug 'tommcdo/vim-lion'
+Plug 'pangloss/vim-javascript'
+Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 
 set background=dark
@@ -141,6 +143,7 @@ nmap <leader>rf :call VimuxRunCommand("spring rspec " . bufname("%"))<cr>
 nmap <leader>rs :call VimuxRunCommand("spring rspec " . bufname("%") . ":" . line("."))<cr>
 nmap <leader>rbf :call VimuxRunCommand("bundle exec rspec " . bufname("%"))<cr>
 nmap <leader>rbs :call VimuxRunCommand("bundle exec rspec " . bufname("%") . ":" . line("."))<cr>
+nmap <leader>rj :call VimuxRunCommand("yarn run jest " . bufname("%"))<cr>
 nmap <leader>bb :VimuxCloseRunner<cr>
 nmap <leader>bc :VimuxPromptCommand<cr>
 nmap <leader>br :VimuxRunLastCommand<cr>
@@ -158,7 +161,7 @@ inoremap jk <esc> " set jk to escape to normal mode
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L> " clear hlsearch with ctrl+l
 nnoremap <silent> <C-P> :Files<cr>
 
-autocmd BufNewFile,BufRead *.es6,*.ts,*.tsx set filetype=javascript
+autocmd BufNewFile,BufRead *.es6 set filetype=javascript
 
 let g:vim_json_syntax_conceal = 0 " don't do weird shit in json files
 
@@ -174,6 +177,9 @@ let g:polyglot_disabled = ['graphql']
 let g:gitgutter_enabled = 0 " disable by default
 set signcolumn=yes
 set updatetime=100 " write swp faster, to trigger faster git status reaction
+
+" vim-jsx-pretty
+let g:vim_jsx_pretty_colorful_config = 1
 
 " vim-lion
 let b:lion_squeeze_spaces = 1 " eliminate excess preceeding spaces
