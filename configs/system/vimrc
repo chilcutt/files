@@ -3,7 +3,6 @@ filetype plugin indent on
 syntax enable
 
 call plug#begin('~/.vim/plugged')
-Plug 'gmarik/Vundle.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/syntastic' " TODO - ALE
 Plug 'tpope/vim-fugitive' " git integration
