@@ -3,30 +3,30 @@ filetype plugin indent on
 syntax enable
 
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic' " TODO - ALE
-Plug 'tpope/vim-fugitive' " git integration
-Plug 'tpope/vim-rhubarb' " github integration
-Plug 'tpope/vim-surround' " surrounding movement
-Plug 'majutsushi/tagbar' " fzf?
-Plug 'vim-scripts/ZoomWin' " ctrl+w o to zoom
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-commentary'
+Plug 'airblade/vim-gitgutter'
 Plug 'altercation/vim-colors-solarized'
 Plug 'benmills/vimux'
-Plug 'sheerun/vim-polyglot' " highlighting and indentation
 Plug 'docunext/closetag.vim' " close HTML tags
+Plug 'jremmen/vim-ripgrep'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'vim-scripts/matchit.zip'
-Plug 'jremmen/vim-ripgrep'
-Plug 'prettier/vim-prettier'
-Plug 'airblade/vim-gitgutter'
-Plug 'tommcdo/vim-lion'
-Plug 'pangloss/vim-javascript'
+Plug 'majutsushi/tagbar' " fzf?
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'pangloss/vim-javascript'
+Plug 'prettier/vim-prettier'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic' " TODO - ALE
+Plug 'sheerun/vim-polyglot' " highlighting and indentation
+Plug 'tommcdo/vim-lion'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive' " git integration
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-rhubarb' " github integration
+Plug 'tpope/vim-surround' " surrounding movement
+Plug 'vim-scripts/ZoomWin' " ctrl+w o to zoom
+Plug 'vim-scripts/matchit.zip'
 Plug 'w0rp/ale'
 call plug#end()
 
