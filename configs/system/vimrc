@@ -30,34 +30,35 @@ Plug 'vim-scripts/matchit.zip'
 Plug 'w0rp/ale'
 call plug#end()
 
+set autoindent
 set background=dark
-set number
-set nowrap
+set backspace=indent,eol,start
+set cmdheight=2
+set complete-=i
+set display+=lastline " show as much of lines as possible instead of @
+set expandtab
+set hidden
 set hlsearch
 set ignorecase
-set smartcase
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
-set cmdheight=2
-set hidden
 set laststatus=2 " always show the statusline
-set statusline+=%F " display the filename in the statusline
-set ttyfast " fast terminal, send characters quickly
 set lazyredraw " redraw less often
-set nrformats-=octal " remove octal from defaults, ctrl+a to add
-set wildmenu " tab completion
-set display+=lastline " show as much of lines as possible instead of @
+set list " show whitespace
 set listchars=tab:>\ ,trail:\.,extends:>,precedes:<,nbsp:+ " show whitespace
-"set list TODO
-set t_Co=16 " match bright colors without forcing bold
-
-" TODO from vim-sensible
-set autoindent
-set backspace=indent,eol,start
-set complete-=i
+set nowrap
+set nrformats-=octal " remove octal from defaults, ctrl+a to add
+set number
+set shiftwidth=2
+set signcolumn=yes " always show the signcolumn so it doesn't move when activated, vim-gitgutter & ale
+set smartcase
 set smarttab
+set softtabstop=2
+set statusline+=%F " display the filename in the statusline
+set t_Co=16 " match bright colors without forcing bold
+set tabstop=2
+set ttyfast " fast terminal, send characters quickly
+set updatetime=100 " write swp faster, to trigger faster git status reaction, vim-gitgutter
+set wildmenu " tab completion
+
 let g:html_indent_script1 = "auto"
 let g:html_indent_style1 = "auto"
 
@@ -179,8 +180,6 @@ let g:polyglot_disabled = ['graphql']
 
 " vim-gitgutter
 let g:gitgutter_enabled = 0 " disable by default
-set signcolumn=yes
-set updatetime=100 " write swp faster, to trigger faster git status reaction
 
 " vim-jsx-pretty
 let g:vim_jsx_pretty_colorful_config = 1
@@ -194,4 +193,3 @@ let g:ale_completion_enabled = 1
 "let g:ale_lint_on_text_changed = 0
 "let g:ale_lint_on_text_changed = 'never'
 "let g:ale_open_list = 1
-set signcolumn=yes
