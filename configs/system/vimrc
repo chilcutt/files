@@ -3,31 +3,30 @@ filetype plugin indent on
 syntax enable
 
 call plug#begin('~/.vim/plugged')
-Plug 'airblade/vim-gitgutter'
-Plug 'altercation/vim-colors-solarized'
-Plug 'benmills/vimux'
-Plug 'docunext/closetag.vim' " close HTML tags
-Plug 'jremmen/vim-ripgrep'
-Plug 'junegunn/fzf'
-Plug 'junegunn/fzf.vim'
-Plug 'majutsushi/tagbar' " fzf?
-Plug 'maxmellon/vim-jsx-pretty'
-Plug 'pangloss/vim-javascript'
-Plug 'prettier/vim-prettier'
-Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic' " TODO - ALE
-Plug 'sheerun/vim-polyglot' " highlighting and indentation
-Plug 'tommcdo/vim-lion'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive' " git integration
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-rake'
-Plug 'tpope/vim-rhubarb' " github integration
-Plug 'tpope/vim-surround' " surrounding movement
-Plug 'vim-scripts/ZoomWin' " ctrl+w o to zoom
-Plug 'vim-scripts/matchit.zip'
-Plug 'w0rp/ale'
+Plug 'airblade/vim-gitgutter'           " display git status in signcolumn
+Plug 'altercation/vim-colors-solarized' " load solarized colorscheme TODO: configuration https://vimawesome.com/plugin/vim-colors-solarized-ours
+Plug 'benmills/vimux'                   " integrate vim with tmux
+Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
+Plug 'jremmen/vim-ripgrep'              " integration with ripgrep, support for :Rg
+Plug 'junegunn/fzf'                     " base fzf integration repository
+Plug 'junegunn/fzf.vim'                 " better vim support for fzf
+Plug 'majutsushi/tagbar'                " adds integration with tags file
+Plug 'maxmellon/vim-jsx-pretty'         " language support for jsx/tsx
+Plug 'pangloss/vim-javascript'          " language support for js/es6
+Plug 'prettier/vim-prettier'            " integrate vim with prettier
+Plug 'scrooloose/nerdtree'              " tree file explorer
+Plug 'sheerun/vim-polyglot'             " TODO - replace with individual plugins
+Plug 'tommcdo/vim-lion'                 " align text around a character
+Plug 'tpope/vim-commentary'             " comment out blocks of lines
+Plug 'tpope/vim-endwise'                " close ruby blocks automatically TODO - is there something better out there?
+Plug 'tpope/vim-fugitive'               " git integration
+Plug 'tpope/vim-rails'                  " ruby on rails integration
+Plug 'tpope/vim-rake'                   " rake integration for non-rails ruby projects
+Plug 'tpope/vim-rhubarb'                " github-specific git integration
+Plug 'tpope/vim-surround'               " surrounding movement
+Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
+Plug 'vim-scripts/matchit.zip'          " adds support for more % matches
+Plug 'w0rp/ale'                         " asynchronous linting
 call plug#end()
 
 set autoindent                                             " automatically indent when hitting <cr>
