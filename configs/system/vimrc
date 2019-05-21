@@ -96,6 +96,33 @@ let g:tagbar_autoclose = 1 " close tagbar after selection
 let g:tagbar_autofocus = 1 " focus when opened
 let g:VimuxHeight = "25" "set vimux terminal height
 
+autocmd BufNewFile,BufRead *.es6 set filetype=javascript
+
+let g:vim_json_syntax_conceal = 0 " don't do weird shit in json files
+
+let g:jsx_ext_required = 0 " handle jsx in js files
+
+" ripgrep configuration
+let g:rg_highlight=1
+
+let g:polyglot_disabled = ['graphql']
+
+" vim-gitgutter
+let g:gitgutter_enabled = 0 " disable by default
+
+" vim-jsx-pretty
+let g:vim_jsx_pretty_colorful_config = 1
+
+" vim-lion
+let b:lion_squeeze_spaces = 1 " eliminate excess preceeding spaces
+
+" ale
+let g:ale_completion_enabled = 1
+"let g:ale_lint_on_save = 1
+"let g:ale_lint_on_text_changed = 0
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_open_list = 1
+
 let mapleader = "\<Space>" " set leader to spacebar
 nmap <leader>w :w<cr>
 nmap <leader>q :q<cr>
@@ -143,30 +170,3 @@ nmap <leader>cn :cnext<cr>
 nmap <leader>cp :cprevious<cr>
 nmap <leader>ln :ALENext<cr>
 nmap <leader>lp :ALEPrevious<cr>
-
-autocmd BufNewFile,BufRead *.es6 set filetype=javascript
-
-let g:vim_json_syntax_conceal = 0 " don't do weird shit in json files
-
-let g:jsx_ext_required = 0 " handle jsx in js files
-
-" ripgrep configuration
-let g:rg_highlight=1
-
-let g:polyglot_disabled = ['graphql']
-
-" vim-gitgutter
-let g:gitgutter_enabled = 0 " disable by default
-
-" vim-jsx-pretty
-let g:vim_jsx_pretty_colorful_config = 1
-
-" vim-lion
-let b:lion_squeeze_spaces = 1 " eliminate excess preceeding spaces
-
-" ale
-let g:ale_completion_enabled = 1
-"let g:ale_lint_on_save = 1
-"let g:ale_lint_on_text_changed = 0
-"let g:ale_lint_on_text_changed = 'never'
-"let g:ale_open_list = 1
