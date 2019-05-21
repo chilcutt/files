@@ -85,10 +85,6 @@ let g:fzf_layout = { 'down': '~20%' }
 " use fzf and rg for advanced find
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
-" don't move on split
-nnoremap <C-w>s Hmx`` \|:split<cr>`xzt``
-nnoremap <C-w>v Hmx`` \|:vsplit<cr>`xzt``
-
 " always show bookmarks
 let NERDTreeShowBookmarks=1
 let g:tagbar_left = 1 " open tagbar on the left
@@ -127,25 +123,37 @@ let mapleader = "\<Space>" " set leader to spacebar
 nmap <leader>w :w<cr>
 nmap <leader>q :q<cr>
 nmap <leader>x :x<cr>
+nmap <leader>o o<esc>
+nmap <leader>O O<esc>
+map <leader>y "+y
+map <leader>p "+p
+inoremap jk <esc> " set jk to escape to normal mode
+
+nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L> " clear hlsearch with ctrl+l
+
+nmap <leader>v :vsp<cr><C-w>l
+nmap <leader>s :sp<cr><C-w>j
 nmap <leader><space> <C-w><C-w>
 nmap <leader>h <C-w>h
 nmap <leader>j <C-w>j
 nmap <leader>k <C-w>k
 nmap <leader>l <C-w>l
-nmap <leader>v :vsp<cr><C-w>l
-nmap <leader>s :sp<cr><C-w>j
+
+nmap <leader>t :tabnew<cr>
+
 nmap <leader>r :NERDTreeFind<cr>
 nmap <leader>d :NERDTreeToggle<cr>
-" nmap <c-t> :TagbarToggle<cr>
-nmap <leader>n :n<cr>
-nmap <leader>N :N<cr>
-nmap <leader>t :tabnew<cr>
+
+nmap <c-t> :TagbarToggle<cr>
+
 nmap <leader>f :Find<space>
-nmap <leader>gs :GitGutterToggle<cr>
-nmap <leader>gb :Gblame<cr>
-nmap <leader>gw :Gbrowse<cr> " open file in browser at Github
-xmap <leader>gw :Gbrowse<cr> " highlight lines
-nmap <leader>g :Rg<space>
+nmap <leader>F :Rg<space>
+nnoremap <silent> <C-P> :Files<cr>
+
+map <leader>gs :GitGutterToggle<cr>
+map <leader>gb :Gblame<cr>
+map <leader>gw :Gbrowse<cr> " open file in browser at Github
+
 nmap <leader>rf :call VimuxRunCommand("spring rspec " . bufname("%"))<cr>
 nmap <leader>rs :call VimuxRunCommand("spring rspec " . bufname("%") . ":" . line("."))<cr>
 nmap <leader>rbf :call VimuxRunCommand("bundle exec rspec " . bufname("%"))<cr>
@@ -154,18 +162,14 @@ nmap <leader>rj :call VimuxRunCommand("yarn run jest " . bufname("%"))<cr>
 nmap <leader>bb :VimuxCloseRunner<cr>
 nmap <leader>bc :VimuxPromptCommand<cr>
 nmap <leader>br :VimuxRunLastCommand<cr>
-nmap <leader>o o<esc>
-nmap <leader>O O<esc>
-nmap <leader>y "+y
-nmap <leader>p "+p
+
 nmap <leader>a :A<cr>
-nmap <silent> <leader>y :w !pbcopy<cr><cr>
-vmap <silent> <leader>y :w !pbcopy<cr><cr>
+
 xmap <leader>/ <Plug>Commentary<cr>
 nmap <leader>/ <Plug>CommentaryLine<cr>
-inoremap jk <esc> " set jk to escape to normal mode
-nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L> " clear hlsearch with ctrl+l
-nnoremap <silent> <C-P> :Files<cr>
+
+nmap <leader>n :n<cr>
+nmap <leader>N :N<cr>
 nmap <leader>cn :cnext<cr>
 nmap <leader>cp :cprevious<cr>
 nmap <leader>ln :ALENext<cr>
