@@ -58,9 +58,6 @@ set ttyfast                                                " send characters to 
 set updatetime=100                                         " write swp faster, to trigger faster git status reaction, vim-gitgutter
 set wildmenu                                               " enable tab completion from insert mode
 
-let g:html_indent_script1 = "auto"
-let g:html_indent_style1 = "auto"
-
 colorscheme solarized
 
 highlight ColorColumn ctermbg=magenta
