@@ -63,7 +63,6 @@ let g:html_indent_style1 = "auto"
 
 colorscheme solarized
 
-highlight Visual term=reverse cterm=reverse guibg=LightGrey
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
 
