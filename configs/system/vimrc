@@ -60,8 +60,9 @@ set wildmenu                                               " enable tab completi
 
 colorscheme solarized
 
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
+" set an 80 guide to try to keep lines short
+highlight ColorColumn ctermbg=darkgray
+let &colorcolumn=join(range(81,999),",")
 
 " highlight all tabs in red
 autocmd ColorScheme * highlight AllTabs ctermbg=red guibg=red
