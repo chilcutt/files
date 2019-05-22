@@ -12,8 +12,10 @@ Plug 'junegunn/fzf'                     " base fzf integration repository
 Plug 'junegunn/fzf.vim'                 " better vim support for fzf
 Plug 'majutsushi/tagbar'                " adds integration with tags file
 Plug 'maxmellon/vim-jsx-pretty'         " language support for jsx/tsx
+Plug 'ngmy/vim-rubocop'                 " rubocop integration
 Plug 'pangloss/vim-javascript'          " language support for js/es6
 Plug 'prettier/vim-prettier'            " integrate vim with prettier
+Plug 'prettier/vim-prettier'            " prettier integration
 Plug 'scrooloose/nerdtree'              " tree file explorer
 Plug 'sheerun/vim-polyglot'             " TODO - replace with individual plugins
 Plug 'tommcdo/vim-lion'                 " align text around a character
@@ -164,3 +166,8 @@ nmap <leader>cn :cnext<cr>
 nmap <leader>cp :cprevious<cr>
 nmap <leader>ln :ALENext<cr>
 nmap <leader>lp :ALEPrevious<cr>
+
+let g:vimrubocop_keymap = 0 " disable default mappings
+map <leader>R :RuboCop -a<cr>
+
+map <leader>P :PrettierAsync<cr>
