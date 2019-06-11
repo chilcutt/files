@@ -5,6 +5,7 @@
 - Twitter: [@kylechil](https://twitter.com/kylechil)
 - LinkedIn: [chilcutt](https://www.linkedin.com/in/chilcutt/)
 - GitHub: [chilcutt](https://github.com/chilcutt)
+- Medium: [@chilcutt](https://medium.com/@chilcutt)
 
 # Professional Experience
 
