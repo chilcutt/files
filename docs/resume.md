@@ -8,8 +8,15 @@
 
 # Professional Experience
 
+## SimplyInsured
+*February 2019 – Current*
+
+### Senior Software Engineer
+
+- SimplyInsured helps eliminate fear in health insurance for the millions of small business employees around the United States.
+
 ## UserTesting
-*January 2016 – Present*
+*January 2016 – February 2019*
 
 ### Senior Product Manager
 
