@@ -171,3 +171,13 @@ let g:vimrubocop_keymap = 0 " disable default mappings
 map <leader>R :RuboCop -a<cr>
 
 map <leader>P :PrettierAsync<cr>
+
+let g:ale_echo_msg_format = "%linter% %code: %%s"
+let g:ale_linters = {
+                  \   "typescript": ["eslint"]
+                  \ }
+let g:ale_fixers = {
+                 \   "ruby": ["rubocop"],
+                 \   "javascript": ["eslint", "prettier"],
+                 \   "typescript": ["eslint", "prettier"]
+                 \ }
