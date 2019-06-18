@@ -107,3 +107,10 @@
 - Standardized specification for off-line failure analysis at motherboard manufacturing sites to provide precise fault isolation and reduce can-not-duplicate errors.
 - Presented business case to senior executives, test teams, and several supply chain partners to develop a long-term implementation strategy.
 - Won second place and scholarship in the Tauber Institute for Global Operations Spotlight! competition.
+
+# Education
+
+## University of Michigan
+
+### Bachelor of Science in Computer Engineering
+*December 2008*
