@@ -15,40 +15,40 @@
 ### Senior Software Engineer
 
 - SimplyInsured helps eliminate fear in health insurance for the millions of small business employees around the United States.
+- Senior software engineer on a team of 7 engineers working on SimplyInsured's core offering and integrations.
 
 ## UserTesting
 *January 2016 – February 2019*
 
 ### Senior Product Manager
 
-- Product manager for design refresh of the unmoderated test creation process
-- Worked with Design, Engineering, User Research, and Data Science to design, prototype, and build a refreshed test creation experience
-
-### Engineering Team Lead
-
-- Team lead on project to modernize UserTesting's customer dashboard
-- Led and coordinated team of 8 software engineers; partnered with Product Management and Design
+- Led design refresh of the unmoderated test creation process, UserTesting's core product offering.
+- Worked with Design, Engineering, User Research, and Data Science to design, prototype, and build a refreshed test creation experience.
+- Coordinated and conducted experiments and user research to inform product requirements and designs.
+- Organized release schedules and built product rollout strategy with product marketing, customer success, and sales.
 
 ### Senior Software Engineer
 
-- Software engineer on an initiative to optimize performance of the backend distribution process significantly reducing risk of outages and downtime
+- Team lead on project to modernize UserTesting's customer dashboard with the goal of implementing a new design with a modern technology stack.
+- Led and coordinated team of 8 software engineers; partnered with Product Management and Design.
+- Contributed to initiative to optimize performance of the backend distribution process significantly reducing risk of outages and downtime.
 
 ## Better.
 *June 2013 – November 2015*
 
 ### Head of Product and Engineering
 
-- First full-time engineer on the Better team
-- Worked with a close-knit startup team to launch a V1 of the Better product
-- Primarily responsible for Better's API and platform, a HIPAA-compliant backend built with Ruby on Rails
-- Hired and coordinated team of RoR, iOS, Android, and JS engineers
+- First full-time engineer on the Better team.
+- Worked with a close-knit startup team to launch a V1 of the Better product.
+- Primarily responsible for Better's API and platform, a HIPAA-compliant backend built with Ruby on Rails.
+- Hired and coordinated team of Ruby on Rails, iOS, Android, and JavaScript engineers.
 
 ## UniversityNow, Inc.
 *April 2012 – April 2013*
 
 ### Senior Software Engineer
 
-- Led development of core features and functionality for the online learning platform used by students and faculty of UniversityNow’s affiliate universities (implemented in Ruby on Rails/Javascript/jQuery).
+- Led development of core features and functionality for the online learning platform used by students and faculty of UniversityNow’s affiliate universities (implemented in Ruby on Rails/JavaScript/jQuery).
 - Acted as technical architect and product owner of internal features including performance, infrastructure, and testing.
 - Implemented 3rd party integration with Zuora billing platform and Salesforce CRM.
 - Responsibilities also included cross-functional feature product management, system administration/operations, and customer support.
@@ -92,7 +92,7 @@
 
 ### Software Engineering Intern
 
-- Contributed to the creation of the Spectrum Intelligence feature of the Cisco Wireless Control System Application including development in Java, Flex, and Javascript.
+- Contributed to the creation of the Spectrum Intelligence feature of the Cisco Wireless Control System Application including development in Java, Flex, and JavaScript.
 - Created and maintained end-to-end Unified Wireless Architecture test bench for team development tests.
 - Development tasks included feature scoping, code creation, documentation, architecture integration and usability testing.
 
