@@ -174,7 +174,7 @@ map <leader>P :PrettierAsync<cr>
 
 let g:ale_echo_msg_format = "%linter% %code: %%s"
 let g:ale_linters = {
-                  \   "typescript": ["eslint"]
+                  \   "typescript": ["eslint", "tsserver"]
                   \ }
 let g:ale_fixers = {
                  \   "ruby": ["rubocop"],
