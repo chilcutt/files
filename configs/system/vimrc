@@ -138,8 +138,8 @@ nmap <leader>d :NERDTreeToggle<cr>
 
 nmap <c-t> :TagbarToggle<cr>
 
-nmap <leader>f :Find<space>
-nmap <leader>F :Rg<space>
+nmap <leader>f :Rg<space>
+nmap <leader>F :Find<space>
 nnoremap <silent> <C-P> :Files<cr>
 
 map <leader>gs :GitGutterToggle<cr>
