@@ -1,0 +1,17 @@
+# set 8 bit clean
+set output-meta on
+
+# single tab completion
+set show-all-if-ambiguous on
+
+# case-insensitive tab completion
+set completion-ignore-case on
+
+# expand tilde during tab completion
+set expand-tilde on
+
+# append character denoting filetype for completions
+set visible-stats on
+
+# set emacs mode, vi mode requires too many keystrokes
+set editing-mode emacs

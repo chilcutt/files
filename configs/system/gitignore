@@ -1,0 +1,14 @@
+.pairs
+*.swp
+.DS_Store
+zeus.json
+custom_plan.rb
+.ruby-version
+.ruby-gemset
+tags
+.pryrc
+.byebug_history
+.rubocop
+.node-version
+config.json.master
+kyle.rake

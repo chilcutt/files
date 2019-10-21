@@ -1,0 +1,44 @@
+[user]
+	name = Kyle Chilcutt
+	email = kyle@chilcutt.com
+[color]
+	ui = true
+[push]
+	default = current
+[core]
+	whitespace = space-before-tab,trailing-space
+	editor = vim
+	pager = less -r
+	excludesfile = /Users/kyle/.gitignore
+[grep]
+	lineNumber = true
+[alias]
+	s = status -sb # simple status
+	cdiff = diff --word-diff=color
+	graph = log --oneline --graph --decorate
+	ls = log --graph --date=short --format='%C(yellow)%h %C(cyan)%ad %C(reset)%s %C(blue)[%aN]%C(reset)'
+	ll = log --graph --date=short --format='%C(yellow)%h %C(cyan)%ad %C(reset)%s %C(blue)[%aN]%C(reset)' --numstat
+	la = log --graph --all --date=short --format='%C(yellow)%h %C(cyan)%ad%C(green bold)%d %C(reset)%s %C(blue)[%aN]%C(reset)'
+	find = !git ls-files | grep -i
+	fgrep = grep --heading --break --ignore-case
+	sub = submodule update --init --recursive
+	short = rev-parse --short
+	show-files = diff-tree --no-commit-id --name-only -r
+	pop = reset HEAD^
+	conflicts = diff --name-only --diff-filter=U
+	current = rev-parse --abbrev-ref HEAD
+	cof = !git for-each-ref --format='%(refname:short)' refs/heads | fzf | xargs git checkout
+[github]
+	user = chilcutt
+[gpg]
+	program = gpg
+[commit]
+	gpgsign = true
+	verbose = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+[help]
+	autocorrect = 1

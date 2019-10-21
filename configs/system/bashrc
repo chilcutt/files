@@ -1,0 +1,80 @@
+[ -z "$PS1" ] && return
+
+if [ -f $HOME/.system-configuration/git/git-prompt.sh ]; then
+  source $HOME/.system-configuration/git/git-prompt.sh
+  GIT_PS1_SHOWCOLORHINTS=true
+  GIT_PS1_SHOWDIRTYSTATE=true
+  GIT_PS1_SHOWUNTRACKEDFILES=true
+  GIT_PS1_SHOWCOLORHINTS=true
+  GIT_PS1_DESCRIBE_STYLE="branch"
+  GIT_PS1_SHOWUPSTREAM="auto git"
+  PROMPT_COMMAND='__git_ps1 "\[\e]0;\u@\h | \w\a\][\u@\h \W" "]\$ "'
+else
+  PS1='\[\e]0;\u@\h | \w\a\][\u@\h \W]\$ '
+fi
+
+export HISTCONTROL=ignoredups:ignorespace
+export HISTSIZE=-1 # unlimited history
+export HISTFILESIZE=-1 # unlimited history
+export EDITOR=vim
+export VISUAL=vim
+export GIT_EDITOR=vim
+export SVN_EDITOR=vim
+export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+export INPUTRC=$HOME/.inputrc
+#[ -f /opt/local/etc/profile.d/bash_completion.sh ] && source /opt/local/etc/profile.d/bash_completion.sh
+
+# allow multiple terminals to write to history
+shopt -s histappend
+
+# automatically spelling correct when changing directory
+shopt -s cdspell
+
+shopt -s checkwinsize
+
+export PATH="/usr/local/opt/libressl/bin:$PATH"
+export PATH="$PATH:/usr/local/opt/mysql-client/bin"
+export PATH="/usr/local/opt/redis@3.2/bin:$PATH"
+#export PATH=/opt/bin:/opt/local/bin:/opt/local/sbin:$PATH
+#export PATH=/opt/local/libexec/gnubin:$PATH
+#export PATH=$PATH:/opt/local/lib/percona/bin
+#export PATH=$PATH:/opt/local/lib/mysql57/bin
+#export PATH=$PATH:/opt/local/lib/postgresql94/bin
+#export PATH=$PATH:/opt/local/libexec/qt5/bin
+#export PATH=$PATH:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin
+#export PATH=$PATH:/opt/local/libexec/yarn/bin
+[ -e /usr/local/heroku ] && export PATH=$PATH:/usr/local/heroku/bin
+#[ -e /opt/local/Library/Frameworks/Python.framework/Versions/Current/bin/activate.sh ] && source /opt/local/Library/Frameworks/Python.framework/Versions/Current/bin/activate.sh
+#[ -s $HOME/.nvm/nvm.sh ] && source $HOME/.nvm/nvm.sh
+[ -f /Users/kyle/.travis/travis.sh ] && source /Users/kyle/.travis/travis.sh
+#[ -e $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - --no-rehash)"
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init - --no-rehash)"
+export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH" # yarn global binaries
+
+[[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
+export PATH=$HOME/Workspace/bin:$PATH
+
+source $HOME/.aliases
+source $HOME/.work_aliases
+
+export DISABLE_SPRING=1
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# fzf + rg configuration
+if command -v fzf > /dev/null && command -v rg > /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/kyle/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/kyle/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/kyle/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/kyle/Downloads/google-cloud-sdk/completion.bash.inc'; fi
