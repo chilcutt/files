@@ -133,8 +133,8 @@ nmap <leader>l <C-w>l
 
 nmap <leader>t :tabnew<cr>
 
-nmap <leader>r :NERDTreeFind<cr>
-nmap <leader>d :NERDTreeToggle<cr>
+" nmap <leader>r :NERDTreeFind<cr>
+" nmap <leader>d :NERDTreeToggle<cr>
 
 nmap <c-t> :TagbarToggle<cr>
 
