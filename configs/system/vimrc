@@ -205,6 +205,7 @@ map <leader>P :PrettierAsync<cr>
 
 let g:ale_echo_msg_format = "%linter% %code: %%s"
 let g:ale_linters = {
+                  \   "javascript": ["eslint", "prettier", "flow-language-server"],
                   \   "typescript": ["eslint", "tsserver"]
                   \ }
 let g:ale_fixers = {
