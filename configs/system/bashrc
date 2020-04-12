@@ -64,8 +64,8 @@ export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH" # yarn global bi
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
 export PATH=$HOME/Workspace/bin:$PATH
 
-source $HOME/.aliases
-source $HOME/.work_aliases
+[ -f $HOME/.aliases ] && source $HOME/.aliases
+[ -f $HOME/.work_aliases ] && source $HOME/.work_aliases
 
 export DISABLE_SPRING=1
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
