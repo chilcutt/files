@@ -1,5 +1,12 @@
 [ -z "$PS1" ] && return
 
+# when using bash-completion@2, different sources for git-prompt
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+  source $(brew --prefix)/etc/bash_completion.d/git-completion.bash
+  source $(brew --prefix)/etc/bash_completion.d/git-prompt.sh
+fi
+
 if [ -f $HOME/.system-configuration/git/git-prompt.sh ]; then
   source $HOME/.system-configuration/git/git-prompt.sh
   GIT_PS1_SHOWCOLORHINTS=true
