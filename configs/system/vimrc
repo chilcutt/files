@@ -213,6 +213,7 @@ let g:ale_fixers = {
                  \   "javascript": ["eslint", "prettier"],
                  \   "typescript": ["eslint", "prettier"]
                  \ }
+let g:ale_completion_enabled = 0 " disable for now, its annoying
 
 let s:javascript_debug_line = "debugger"
 let s:ruby_debug_line = "require 'pry'; binding.pry"
