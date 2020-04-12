@@ -213,3 +213,25 @@ let g:ale_fixers = {
                  \   "javascript": ["eslint", "prettier"],
                  \   "typescript": ["eslint", "prettier"]
                  \ }
+
+let s:javascript_debug_line = "debugger"
+let s:ruby_debug_line = "require 'pry'; binding.pry"
+
+function! FlipDebugger()
+  if &filetype ==# "javascript"
+    if getline('.') =~? s:javascript_debug_line
+      normal dd
+    else
+      execute "normal" "o" . s:javascript_debug_line
+    endif
+  elseif &filetype ==# "ruby"
+    if getline('.') =~? s:ruby_debug_line
+      normal dd
+    else
+      execute "normal" "o" . s:ruby_debug_line
+    endif
+  endif
+  write
+endfunction
+
+nnoremap <leader>d :call FlipDebugger()<cr>
