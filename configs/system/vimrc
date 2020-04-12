@@ -146,11 +146,42 @@ map <leader>gs :GitGutterToggle<cr>
 map <leader>gb :Gblame<cr>
 map <leader>gw :Gbrowse<cr> " open file in browser at Github
 
-nmap <leader>rf :call VimuxRunCommand("spring rspec " . bufname("%"))<cr>
-nmap <leader>rs :call VimuxRunCommand("spring rspec " . bufname("%") . ":" . line("."))<cr>
-nmap <leader>rbf :call VimuxRunCommand("bundle exec rspec " . bufname("%"))<cr>
-nmap <leader>rbs :call VimuxRunCommand("bundle exec rspec " . bufname("%") . ":" . line("."))<cr>
-nmap <leader>rj :call VimuxRunCommand("yarn run jest " . bufname("%"))<cr>
+let s:ruby_runner = "bundle exec rspec"
+let s:javascript_runner = "yarn run jest"
+let s:javascript_debug_runner = "node --inspect-brk node_modules/.bin/jest --runInBand"
+
+function RunTestFile()
+  if &filetype ==# "javascript"
+    call VimuxRunCommand(s:javascript_runner . " " . bufname("%"))
+  elseif &filetype ==# "ruby"
+    call VimuxRunCommand(s:ruby_runner . " " . bufname("%"))
+  endif
+endfunction
+
+function RunTestLine()
+  if &filetype ==# "javascript"
+    call VimuxRunCommand(s:javascript_runner . " " . bufname("%"))
+  elseif &filetype ==# "ruby"
+    call VimuxRunCommand(s:ruby_runner . " " . bufname("%") . " -l " . line("."))
+  endif
+endfunction
+
+function RunTestDebugger()
+  if &filetype ==# "javascript"
+    call VimuxRunCommand(s:javascript_debug_runner . " " . bufname("%"))
+  endif
+endfunction
+
+function RunTestWatch()
+  if &filetype ==# "javascript"
+    call VimuxRunCommand(s:javascript_runner . " " . bufname("%") . " --watch")
+  endif
+endfunction
+
+nmap <leader>rf :call RunTestFile()<cr>
+nmap <leader>rs :call RunTestLine()<cr>
+nmap <leader>rd :call RunTestDebugger()<cr>
+nmap <leader>rw :call RunTestWatch()<cr>
 nmap <leader>bb :VimuxCloseRunner<cr>
 nmap <leader>bc :VimuxPromptCommand<cr>
 nmap <leader>br :VimuxRunLastCommand<cr>
