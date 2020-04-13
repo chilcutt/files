@@ -27,7 +27,6 @@ export GIT_EDITOR=vim
 export SVN_EDITOR=vim
 export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 export INPUTRC=$HOME/.inputrc
-#[ -f /opt/local/etc/profile.d/bash_completion.sh ] && source /opt/local/etc/profile.d/bash_completion.sh
 
 # allow multiple terminals to write to history
 shopt -s histappend
@@ -40,19 +39,8 @@ shopt -s checkwinsize
 export PATH="/usr/local/opt/libressl/bin:$PATH"
 export PATH="$PATH:/usr/local/opt/mysql-client/bin"
 export PATH="/usr/local/opt/redis@3.2/bin:$PATH"
-#export PATH=/opt/bin:/opt/local/bin:/opt/local/sbin:$PATH
-#export PATH=/opt/local/libexec/gnubin:$PATH
-#export PATH=$PATH:/opt/local/lib/percona/bin
-#export PATH=$PATH:/opt/local/lib/mysql57/bin
-#export PATH=$PATH:/opt/local/lib/postgresql94/bin
-#export PATH=$PATH:/opt/local/libexec/qt5/bin
-#export PATH=$PATH:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin
-#export PATH=$PATH:/opt/local/libexec/yarn/bin
 [ -e /usr/local/heroku ] && export PATH=$PATH:/usr/local/heroku/bin
-#[ -e /opt/local/Library/Frameworks/Python.framework/Versions/Current/bin/activate.sh ] && source /opt/local/Library/Frameworks/Python.framework/Versions/Current/bin/activate.sh
-#[ -s $HOME/.nvm/nvm.sh ] && source $HOME/.nvm/nvm.sh
 [ -f /Users/kyle/.travis/travis.sh ] && source /Users/kyle/.travis/travis.sh
-#[ -e $HOME/.rvm/scripts/rvm ] && source $HOME/.rvm/scripts/rvm
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - --no-rehash)"
 export PATH="$HOME/.nodenv/bin:$PATH"
@@ -66,8 +54,6 @@ export PATH=$HOME/Workspace/bin:$PATH
 [ -f $HOME/.work_aliases ] && source $HOME/.work_aliases
 
 export DISABLE_SPRING=1
-#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash # install fzf extensions first
 
