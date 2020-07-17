@@ -36,6 +36,11 @@ Plug 'tpope/vim-surround'               " surrounding movement
 Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
 Plug 'vim-scripts/matchit.zip'          " adds support for more % matches
 Plug 'w0rp/ale'                         " asynchronous linting
+Plug 'godlygeek/tabular'                " dependency for vim-markdown
+Plug 'plasticboy/vim-markdown'          " utilities for md files
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  } " preview support for markdown
+Plug 'junegunn/goyo.vim'                " remove editor decoration
+Plug 'junegunn/limelight.vim'           " focus on current block
 call plug#end()
 
 set autoindent                                             " automatically indent when hitting <cr>
@@ -243,3 +248,43 @@ function! FlipDebugger()
 endfunction
 
 nnoremap <leader>d :call FlipDebugger()<cr>
+
+" disable markdown folding
+let g:vim_markdown_folding_disabled = 1
+
+" update preview only when exiting insert mode
+let g:mkdp_refresh_slow = 1
+
+" set width while in goyo (default: 80)
+let g:goyo_width = 100
+
+" custom commands for goyo
+function! s:goyo_enter()
+  set noshowmode
+  set noshowcmd
+
+  " keep cursor in middle of the line
+  set scrolloff=999
+
+  " wrap long lines that are typical in markdown
+  set wrap
+
+  " enable limelight
+  Limelight
+endfunction
+
+function! s:goyo_leave()
+  set showmode
+  set showcmd
+  set scrolloff=5
+  set nowrap
+  Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" limelight configuration
+set t_Co=256
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
