@@ -288,3 +288,10 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 set t_Co=256
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
+
+function! MarkdownMode()
+  MarkdownPreview
+  Goyo
+endfunction
+
+nmap <leader>md :call MarkdownMode()<cr> " launch markdown preview and start goyo mode
