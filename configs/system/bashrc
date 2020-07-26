@@ -41,10 +41,16 @@ export PATH="$PATH:/usr/local/opt/mysql-client/bin"
 export PATH="/usr/local/opt/redis@3.2/bin:$PATH"
 [ -e /usr/local/heroku ] && export PATH=$PATH:/usr/local/heroku/bin
 [ -f /Users/kyle/.travis/travis.sh ] && source /Users/kyle/.travis/travis.sh
+
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - --no-rehash)"
+
 export PATH="$HOME/.nodenv/bin:$PATH"
 eval "$(nodenv init - --no-rehash)"
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init - --no-rehash)"
+
 export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH" # yarn global binaries
 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
