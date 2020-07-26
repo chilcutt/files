@@ -34,3 +34,5 @@ alias vi='vim'
 
 [ -n `which gem` ] && alias remove_all_gems='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 [ -n `which pkill` ] && alias logout_user='pkill -KILL -u'
+
+alias clear-dns-cache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
