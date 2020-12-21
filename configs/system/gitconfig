@@ -1,6 +1,7 @@
 [user]
 	name = Kyle Chilcutt
 	email = kyle@chilcutt.com
+	signingkey = DFB036E3773D25DB
 [color]
 	ui = true
 [push]
@@ -37,7 +38,7 @@
 [gpg]
 	program = gpg
 [commit]
-	gpgsign = true
+	gpgsign = false
 	verbose = true
 [filter "lfs"]
 	smudge = git-lfs smudge -- %f
@@ -46,3 +47,5 @@
 	clean = git-lfs clean -- %f
 [help]
 	autocorrect = 1
+[pull]
+	ff = only
