@@ -6,14 +6,24 @@ def red(string)
   "\e[31m#{string}\e[0m"
 end
 
-files = `git diff --cached --name-only --diff-filter=ACM -- *.{rb,js,jsx,ts}`.split("\n")
-exit(0) if files.empty?
+files =
+  `git diff --cached --name-only --diff-filter=ACM -- *.{rb,js,jsx,ts}`.split(
+    "\n",
+  )
+if files.empty?
+  exit(0)
+end
 
 errors = {}
 
 if (rb_files = files.select { |f| f.match(/.rb$/) }).any?
   puts "Checking rubocop..."
-  stdout, _, status = Open3.capture3("rubocop --format simple --fail-level autocorrect --auto-correct #{rb_files.join(" ")}")
+  stdout, _, status =
+    Open3.capture3(
+      "rubocop --format simple --fail-level autocorrect --auto-correct #{
+        rb_files.join(" ")
+      }",
+    )
   unless status.success?
     errors[:rubocop] = stdout
   end
@@ -23,7 +33,10 @@ if (js_files = files.select { |f| f.match(/.(?:js|jsx|ts)$/) }).any?
   targets = js_files.join(" ")
 
   puts "Checking prettier..."
-  stdout, _, status = Open3.capture3("yarn run --silent prettier --list-different --write #{targets}")
+  stdout, _, status =
+    Open3.capture3(
+      "yarn run --silent prettier --list-different --write #{targets}",
+    )
   unless status.success?
     errors[:prettier] = stdout
   end
