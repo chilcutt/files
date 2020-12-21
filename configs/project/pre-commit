@@ -2,63 +2,109 @@
 
 require "open3"
 
-def red(string)
-  "\e[31m#{string}\e[0m"
-end
+module PreCommit
+  Result = Struct.new(:success, :errors)
 
-files =
-  `git diff --cached --name-only --diff-filter=ACM -- *.{rb,js,jsx,ts}`.split(
-    "\n",
-  )
-if files.empty?
-  exit(0)
-end
+  class Runner
+    def self.perform
+      out, status =
+        Open3.capture2e(
+          "git diff --cached --name-only --diff-filter=ACM -- '*.rb' '*.js' '*.jsx' '*.ts'",
+        )
 
-errors = {}
+      unless status.success?
+        raise "Unable to retrieve git status."
+      end
 
-if (rb_files = files.select { |f| f.match(/.rb$/) }).any?
-  puts "Checking rubocop..."
-  stdout, _, status =
-    Open3.capture3(
-      "rubocop --format simple --fail-level autocorrect --auto-correct #{
-        rb_files.join(" ")
-      }",
-    )
-  unless status.success?
-    errors[:rubocop] = stdout
+      filenames = out.split("\n")
+
+      if filenames.empty?
+        exit(0)
+      end
+
+      results =
+        [Rubocop, Prettier, ESLint].each_with_object({}) do |engine, results|
+          puts "Checking #{engine.to_s}..."
+          results[engine.to_s] = engine.perform(filenames)
+        end
+
+      if results.any?
+        puts
+        errors.each do |type, messages|
+          puts("=" * 50)
+          puts red("#{type} errors:")
+          puts messages
+          puts("=" * 50)
+          puts
+        end
+        exit(1)
+      end
+
+      exit(0)
+    end
+
+    private_class_method def self.red(string)
+      "\e[31m#{string}\e[0m"
+    end
+  end
+
+  class Rubocop
+    def self.perform(filenames)
+      target_filenames = filenames.select { |f| f.match(/.rb$/) }
+
+      if target_filenames.empty?
+        return Result.new(success: true, errors: [])
+      end
+
+      output, status =
+        Open3.capture2e(
+          "rubocop --format simple --fail-level autocorrect --auto-correct #{
+            target_filenames.join(" ")
+          }",
+        )
+
+      Result.new(success: status.success?, errors: output)
+    end
+  end
+
+  class Prettier
+    def self.perform(filenames)
+      target_filenames = filenames.select { |f| f.match(/.(?:rb|js|jsx|ts)$/) }
+
+      if target_filenames.empty?
+        return Result.new(success: true, errors: [])
+      end
+
+      output, status =
+        Open3.capture2e(
+          "yarn run --silent prettier --list-different --write #{
+            target_filenames.join(" ")
+          }",
+        )
+
+      Result.new(success: status.success?, errors: output)
+    end
+  end
+
+  class ESLint
+    def self.perform(filenames)
+      target_filenames = filenames.select { |f| f.match(/.(?:rb|js|jsx|ts)$/) }
+
+      if target_filenames.empty?
+        return Result.new(success: true, errors: [])
+      end
+
+      targets = target_filenames.join(" ")
+
+      output, status = Open3.capture2e("yarn run --silent eslint #{targets}")
+
+      unless status.success?
+        system("yarn run --silent eslint --fix #{targets}")
+      end
+
+      Result.new(success: status.success?, errors: output)
+    end
   end
 end
 
-if (js_files = files.select { |f| f.match(/.(?:js|jsx|ts)$/) }).any?
-  targets = js_files.join(" ")
-
-  puts "Checking prettier..."
-  stdout, _, status =
-    Open3.capture3(
-      "yarn run --silent prettier --list-different --write #{targets}",
-    )
-  unless status.success?
-    errors[:prettier] = stdout
-  end
-
-  puts "Checking eslint..."
-  stdout, _, status = Open3.capture3("yarn run --silent eslint #{targets}")
-  unless status.success?
-    errors[:eslint] = stdout
-    system("yarn run --silent eslint --fix #{targets}")
-  end
-end
-
-if errors.any?
-  puts
-  errors.each do |type, messages|
-    puts("=" * 50)
-    puts red("#{type} errors:")
-    puts messages
-    puts("=" * 50)
-    puts
-  end
-  exit(1)
-end
-
-exit(0)
+PreCommit::Runner.perform
