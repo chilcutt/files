@@ -6,8 +6,6 @@ def red(string)
   "\e[31m#{string}\e[0m"
 end
 
-exit(0) if ENV["ARCANIST"]
-
 files = `git diff --cached --name-only --diff-filter=ACM -- *.{rb,js,jsx,ts}`.split("\n")
 exit(0) if files.empty?
 
