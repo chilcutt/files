@@ -1,48 +1,59 @@
 #!/usr/bin/env ruby
 
-require 'open3'
+require "open3"
 
 ##################################################
 # prettier-ignore-start
 
 ENABLED_LINTERS = [
-  Rubocop,
-  Prettier,
-  ESLint,
+  "Rubocop",
+  "Prettier",
+  "ESLint",
 ]
-Runner.perform
 
 # prettier-ignore-end
 ##################################################
 
-Result = Struct.new(:success, :errors)
+Result = Struct.new(:success, :errors, keyword_init: true)
 
 class Runner
   def self.perform
+    filename_extensions =
+      ENABLED_LINTERS
+        .map(&method(:const_get))
+        .flat_map(&:filename_extensions)
+        .uniq
+        .map { |ext| "'*.#{ext}'" }
+        .join(" ")
+
     out, status =
       Open3.capture2e(
-        "git diff --cached --name-only --diff-filter=ACM -- '*.rb' '*.js' '*.jsx' '*.ts'",
+        "git diff --cached --name-only --diff-filter=ACM -- #{
+          filename_extensions
+        }",
       )
 
-    raise 'Unable to retrieve git status.' unless status.success?
+    raise "Unable to retrieve git status." unless status.success?
 
     filenames = out.split("\n")
 
     exit(0) if filenames.empty?
 
     results =
-      ENABLED_LINTERS.each_with_object({}) do |engine, results|
-        puts "Checking #{engine.to_s}..."
-        results[engine.to_s] = engine.perform(filenames)
+      ENABLED_LINTERS.each_with_object({}) do |name, results|
+        linter = const_get(name)
+        puts "Checking #{linter.to_s}..."
+        results[name] = linter.perform(filenames)
       end
 
-    if results.any?
+    unless results.values.all?(&:success)
       puts
-      errors.each do |type, messages|
-        puts('=' * 50)
+      results.each do |type, result|
+        next if result.success
+        puts("=" * 50)
         puts red("#{type} errors:")
-        puts messages
-        puts('=' * 50)
+        puts result.errors
+        puts("=" * 50)
         puts
       end
       exit(1)
@@ -57,6 +68,10 @@ class Runner
 end
 
 class Rubocop
+  def self.filename_extensions
+    %w[rb]
+  end
+
   def self.perform(filenames)
     target_filenames = filenames.select { |f| f.match(/.rb$/) }
 
@@ -65,7 +80,7 @@ class Rubocop
     output, status =
       Open3.capture2e(
         "rubocop --format simple --fail-level autocorrect --auto-correct #{
-          target_filenames.join(' ')
+          target_filenames.join(" ")
         }",
       )
 
@@ -74,6 +89,10 @@ class Rubocop
 end
 
 class Prettier
+  def self.filename_extensions
+    %w[rb js jsx ts]
+  end
+
   def self.perform(filenames)
     target_filenames = filenames.select { |f| f.match(/.(?:rb|js|jsx|ts)$/) }
 
@@ -82,7 +101,7 @@ class Prettier
     output, status =
       Open3.capture2e(
         "yarn run --silent prettier --list-different --write #{
-          target_filenames.join(' ')
+          target_filenames.join(" ")
         }",
       )
 
@@ -91,12 +110,16 @@ class Prettier
 end
 
 class ESLint
+  def self.filename_extensions
+    %w[js jsx ts]
+  end
+
   def self.perform(filenames)
     target_filenames = filenames.select { |f| f.match(/.(?:rb|js|jsx|ts)$/) }
 
     return Result.new(success: true, errors: []) if target_filenames.empty?
 
-    targets = target_filenames.join(' ')
+    targets = target_filenames.join(" ")
 
     output, status = Open3.capture2e("yarn run --silent eslint #{targets}")
 
@@ -105,3 +128,5 @@ class ESLint
     Result.new(success: status.success?, errors: output)
   end
 end
+
+Runner.perform
