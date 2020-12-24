@@ -1,18 +1,17 @@
 #!/usr/bin/env ruby
 
 require_relative "linters.rb"
-include Linter
 
 ##################################################
 # prettier-ignore-start
 
 ENABLED_LINTERS = [
-  Rubocop,
-  Prettier,
-  ESLint,
+  Linter::Rubocop,
+  Linter::Prettier,
+  Linter::ESLint,
 ]
 
 # prettier-ignore-end
 ##################################################
 
-Runner.perform(ENABLED_LINTERS)
+Linter::Runner.perform(ENABLED_LINTERS)
