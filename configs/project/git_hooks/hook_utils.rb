@@ -4,7 +4,7 @@ require 'open3'
 
 Result = Struct.new(:success, :errors, keyword_init: true)
 
-module Linter
+module Checker
   class Rubocop
     def self.filename_extensions
       %w[rb]
@@ -76,6 +76,23 @@ module Runner
     def red(string)
       "\e[31m#{string}\e[0m"
     end
+
+    def process_results(results)
+      unless results.values.all?(&:success)
+        puts
+        results.each do |type, result|
+          next if result.success
+          puts('=' * 50)
+          puts red("#{type} errors:")
+          puts result.errors
+          puts('=' * 50)
+          puts
+        end
+        exit(1)
+      end
+
+      exit(0)
+    end
   end
 
   class PreCommit
@@ -110,20 +127,7 @@ module Runner
           results[name] = linter.perform(filenames)
         end
 
-      unless results.values.all?(&:success)
-        puts
-        results.each do |type, result|
-          next if result.success
-          puts('=' * 50)
-          puts red("#{type} errors:")
-          puts result.errors
-          puts('=' * 50)
-          puts
-        end
-        exit(1)
-      end
-
-      exit(0)
+      process_results(results)
     end
   end
 end

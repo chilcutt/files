@@ -5,13 +5,13 @@ require_relative "hook_utils.rb"
 ##################################################
 # prettier-ignore-start
 
-ENABLED_LINTERS = [
-  Linter::Rubocop,
-  Linter::Prettier,
-  Linter::ESLint,
+ENABLED_CHECKERS = [
+  Checker::Rubocop,
+  Checker::Prettier,
+  Checker::ESLint,
 ]
 
 # prettier-ignore-end
 ##################################################
 
-Runner::PreCommit.perform(ENABLED_LINTERS)
+Runner::PreCommit.perform(ENABLED_CHECKERS)
