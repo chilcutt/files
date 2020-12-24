@@ -98,9 +98,9 @@ module Runner
   class PreCommit
     extend Utils
 
-    def self.perform(enabled_linters)
+    def self.perform(enabled_checkers)
       filename_extensions =
-        enabled_linters
+        enabled_checkers
           .flat_map(&:filename_extensions)
           .uniq
           .map { |ext| "'*.#{ext}'" }
@@ -121,10 +121,46 @@ module Runner
       exit(0) if filenames.empty?
 
       results =
-        enabled_linters.each_with_object({}) do |linter, results|
-          name = linter.name.split("::").last
+        enabled_checkers.each_with_object({}) do |checker, results|
+          name = checker.name.split("::").last
           puts "Checking #{name}..."
-          results[name] = linter.perform(filenames)
+          results[name] = checker.perform(filenames)
+        end
+
+      process_results(results)
+    end
+  end
+
+  class PrePush
+    extend Utils
+
+    def self.perform(enabled_checkers, remote_sha, local_sha)
+      filename_extensions =
+        enabled_checkers
+          .flat_map(&:filename_extensions)
+          .uniq
+          .map { |ext| "'*.#{ext}'" }
+          .join(' ')
+
+      out, status =
+        Open3.capture2e(
+          "git diff --name-only --diff-filter=ACM #{remote_sha}..#{local_sha} -- #{
+            filename_extensions
+          }",
+          chdir: Dir.pwd,
+        )
+
+      raise 'Unable to retrieve git status.' unless status.success?
+
+      filenames = out.split("\n")
+
+      exit(0) if filenames.empty?
+
+      results =
+        enabled_checkers.each_with_object({}) do |checker, results|
+          name = checker.name.split("::").last
+          puts "Checking #{name}..."
+          results[name] = checker.perform(filenames)
         end
 
       process_results(results)

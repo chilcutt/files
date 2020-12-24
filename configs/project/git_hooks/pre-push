@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+require_relative "hook_utils.rb"
+
+##################################################
+# prettier-ignore-start
+
+ENABLED_CHECKERS = [
+  Checker::Rubocop,
+  Checker::Prettier,
+  Checker::ESLint,
+]
+
+# prettier-ignore-end
+##################################################
+
+_local_ref, local_sha, _remote_ref, remote_sha = STDIN.read.split
+
+Runner::PrePush.perform(ENABLED_CHECKERS, remote_sha, local_sha)
