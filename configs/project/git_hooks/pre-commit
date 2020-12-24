@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative "linters.rb"
+require_relative "hook_utils.rb"
 
 ##################################################
 # prettier-ignore-start
@@ -14,4 +14,4 @@ ENABLED_LINTERS = [
 # prettier-ignore-end
 ##################################################
 
-Linter::Runner.perform(ENABLED_LINTERS)
+Runner::PreCommit.perform(ENABLED_LINTERS)

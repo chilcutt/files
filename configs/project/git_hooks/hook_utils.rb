@@ -2,9 +2,9 @@
 
 require 'open3'
 
-module Linter
-  Result = Struct.new(:success, :errors, keyword_init: true)
+Result = Struct.new(:success, :errors, keyword_init: true)
 
+module Linter
   class Rubocop
     def self.filename_extensions
       %w[rb]
@@ -69,8 +69,18 @@ module Linter
       Result.new(success: status.success?, errors: output)
     end
   end
+end
 
-  class Runner
+module Runner
+  module Utils
+    def red(string)
+      "\e[31m#{string}\e[0m"
+    end
+  end
+
+  class PreCommit
+    extend Utils
+
     def self.perform(enabled_linters)
       filename_extensions =
         enabled_linters
@@ -114,10 +124,6 @@ module Linter
       end
 
       exit(0)
-    end
-
-    private_class_method def self.red(string)
-      "\e[31m#{string}\e[0m"
     end
   end
 end
