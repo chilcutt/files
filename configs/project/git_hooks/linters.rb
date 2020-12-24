@@ -45,7 +45,7 @@ module Linter
           chdir: Dir.pwd,
         )
 
-      Result.new(success: status.success?, errors: output)
+      Result.new(success: status.success? && output.empty?, errors: output)
     end
   end
 
