@@ -43,7 +43,6 @@ Plug 'junegunn/limelight.vim'           " focus on current block
 call plug#end()
 
 set autoindent                                             " automatically indent when hitting <cr>
-set background=dark                                        " set colors for dark background
 set backspace=indent,eol,start                             " set backspace to work correctly with autoindent, line breaks, and beyond insert mode start
 set cmdheight=2                                            " increase the space for commands so the window doesn't feel jumpy
 set complete-=i                                            " exclude included files from completion
