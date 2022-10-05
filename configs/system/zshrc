@@ -1,0 +1,76 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/Users/kyle/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+export HISTCONTROL=ignoredups:ignorespace
+export HISTSIZE=10000 # unlimited history
+export HISTFILESIZE=10000 # unlimited history
+export EDITOR=vim
+export VISUAL=vim
+export GIT_EDITOR=vim
+export SVN_EDITOR=vim
+export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
+export INPUTRC=$HOME/.inputrc
+export CLICOLOR=1
+
+# allow multiple terminals to write to history
+# shopt -s histappend
+
+# automatically spelling correct when changing directory
+# shopt -s cdspell
+
+# shopt -s checkwinsize
+
+export PATH="/usr/local/opt/libressl/bin:$PATH"
+export PATH="$PATH:/usr/local/opt/mysql-client/bin"
+export PATH="/usr/local/opt/redis@3.2/bin:$PATH"
+[ -e /usr/local/heroku ] && export PATH=$PATH:/usr/local/heroku/bin
+[ -f /Users/kyle/.travis/travis.sh ] && source /Users/kyle/.travis/travis.sh
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - --no-rehash)"
+
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init - --no-rehash)"
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - --no-rehash --path)"
+
+# export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH" # yarn global binaries
+
+[[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
+export PATH=$HOME/Workspace/bin:$PATH
+
+[ -f $HOME/.aliases ] && source $HOME/.aliases
+[ -f $HOME/.work_aliases ] && source $HOME/.work_aliases
+
+export DISABLE_SPRING=1
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh # install fzf extensions first
+
+# fzf + rg configuration
+if command -v fzf > /dev/null && command -v rg > /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --no-messages --glob "!.git/*"'
+  export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+fi
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/kyle/Workspace/bin/google-cloud-sdk/path.bash.inc' ]; then . '/Users/kyle/Workspace/bin/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/kyle/Workspace/bin/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/kyle/Workspace/bin/google-cloud-sdk/completion.bash.inc'; fi
+
+# case-insensitive autocomplete
+autoload -Uz compinit && compinit
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
