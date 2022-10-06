@@ -83,3 +83,5 @@ if [ -f '/Users/kyle/Workspace/bin/google-cloud-sdk/completion.bash.inc' ]; then
 # case-insensitive autocomplete
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
