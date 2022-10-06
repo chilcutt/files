@@ -79,7 +79,7 @@ endif
 colorscheme solarized
 
 " set an 80 guide to try to keep lines short
-highlight ColorColumn ctermbg=darkgray
+highlight ColorColumn ctermbg=black
 let &colorcolumn=join(range(81,999),",")
 
 " highlight all tabs in red
