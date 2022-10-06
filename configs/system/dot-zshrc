@@ -18,6 +18,9 @@ fi
 source ${ZIM_HOME}/init.zsh
 ##########
 
+# Activate starship prompt
+eval "$(starship init zsh)"
+
 # Configure custom history file with more explicit name.
 HISTFILE=~/.zsh_history
 
