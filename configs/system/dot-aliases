@@ -30,7 +30,8 @@ alias mux=tmuxinator
 alias npm-exec='PATH=$(npm bin):$PATH'
 alias open-link="open -a 'Google Chrome'"
 alias utc='date -u +"%Y-%m-%dT%H%MZ"'
-alias vi='vim'
+alias vi='nvim'
+alias vim='nvim'
 
 [ -n `which gem` ] && alias remove_all_gems='gem list | cut -d" " -f1 | xargs gem uninstall -aIx'
 [ -n `which pkill` ] && alias logout_user='pkill -KILL -u'
