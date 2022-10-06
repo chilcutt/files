@@ -222,13 +222,17 @@ map <leader>P :PrettierAsync<cr>
 let g:ale_echo_msg_format = "%linter% %code: %%s"
 let g:ale_linters = {
                   \   "javascript": ["eslint", "prettier", "flow-language-server"],
-                  \   "typescript": ["eslint", "tsserver"]
+                  \   "typescript": ["eslint", "tsserver"],
+                  \   "typescriptreact": ["eslint", "prettier"]
                   \ }
 let g:ale_fixers = {
                  \   "ruby": ["rubocop"],
                  \   "javascript": ["eslint", "prettier"],
-                 \   "typescript": ["eslint", "prettier"]
+                 \   "typescript": ["eslint", "prettier"],
+                 \   "typescriptreact": ["prettier"]
                  \ }
+let g:ale_javascript_prettier_use_local_config = 1
+let g:ale_fix_on_save = 1 " automatically fix when saving
 let g:ale_completion_enabled = 0 " disable for now, its annoying
 
 let s:javascript_debug_line = "debugger"
