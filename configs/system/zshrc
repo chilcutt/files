@@ -1,7 +1,16 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+# Configure custom history file with more explicit name.
+HISTFILE=~/.zsh_history
+
+# Increase size to preserve more command history.
+HISTSIZE=100000 # memory
+SAVEHIST=$HISTSIZE # file
+
+# Prevent duplicate commands from being written to history.
+setopt hist_ignore_all_dups
+
+# Do not add commands starting with a space to history.
+setopt hist_ignore_space
+
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
