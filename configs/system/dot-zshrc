@@ -1,4 +1,13 @@
 ##########
+# Stripe configuration
+autoload -Uz compinit; compinit
+autoload -Uz bashcompinit; bashcompinit
+source ~/.bash_profile
+source ~/.bashrc
+compdef _git stripe-git=git # this line specifically will fix git autocompletion
+##########
+
+##########
 # zim
 zstyle ':zim:zmodule' use 'degit'
 ZIM_HOME=~/.zim
