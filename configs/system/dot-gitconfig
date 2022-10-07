@@ -33,6 +33,7 @@
 	short = rev-parse --short
 	show-files = diff-tree --no-commit-id --name-only -r
 	sub = submodule update --init --recursive
+	latest-master = !git fetch origin master-passing-tests:master-passing-tests && git checkout master-passing-tests
 [github]
 	user = chilcutt
 [gpg]
