@@ -55,10 +55,10 @@ compinit
 export HISTCONTROL=ignoredups:ignorespace
 export HISTSIZE=10000 # unlimited history
 export HISTFILESIZE=10000 # unlimited history
-export EDITOR=vim
-export VISUAL=vim
-export GIT_EDITOR=vim
-export SVN_EDITOR=vim
+export EDITOR=nvim
+export VISUAL=nvim
+export GIT_EDITOR=nvim
+export SVN_EDITOR=nvim
 export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 export INPUTRC=$HOME/.inputrc
 export CLICOLOR=1
