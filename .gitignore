@@ -1,0 +1,2 @@
+# Ignore artifacts from compiling and installing packer plugins.
+configs/system/.config/nvim/plugin
