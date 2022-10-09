@@ -46,30 +46,19 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = vim.fn.expand("$MYVIMRC"),
 })
 
-vim.opt.autoindent = true                                          -- XXX automatically indent when hitting <cr>
-vim.opt.backspace = "indent,eol,start"                             -- XXX set backspace to work correctly with autoindent, line breaks, and beyond insert mode start
 vim.opt.cmdheight = 2                                              -- increase the space for commands so the window doesn't feel jumpy
--- vim.opt.complete -= i                                           -- XXX exclude included files from completion
-vim.opt.display = "lastline"                                       -- XXX show as much of lines as possible instead of @
 vim.opt.expandtab = true                                           -- when pressing tab, insert spaces
-vim.opt.hidden = true                                              -- XXX allow buffers to be hidden, don't force writing before navigating away
-vim.opt.hlsearch = true                                            -- XXX highlight all search matching
 vim.opt.ignorecase = true                                          -- perform case-insensitive searches
-vim.opt.laststatus = 2                                             -- XXX always show the statusline
 vim.opt.lazyredraw = true                                          -- REMOVEBOTH redraw less often for smoother scrolling
 vim.opt.list = true                                                -- show whitespace characters in listchars
 vim.opt.listchars = "tab:>\ ,trail:\.,extends:>,precedes:<,nbsp:+" -- mark tabs, trailing spaces, non-breakable spaces
-vim.opt.wrap = false                                               -- default to not wrapping long lines
 vim.opt.nrformats = "alpha,hex,bin"                                -- set alpha, 0x, and 0b to be incremented, disable octal because decimal is often zero-padded
 vim.opt.number = true                                              -- display the line number in before each line
 vim.opt.shiftwidth = 2                                             -- set indentation with >> to 2
 vim.opt.signcolumn = "yes"                                         -- always show the signcolumn so it doesn't move when activated, vim-gitgutter & ale
 vim.opt.smartcase = true                                           -- when a search query has a capital letter, do an exact match search
-vim.opt.smarttab = true                                            -- XXX enable tabbing based on shiftwidth and tabstop
 vim.opt.softtabstop = 2                                            -- set each tab to insert 2 spaces with expandtab
 vim.opt.statusline = "%F"                                          -- display the filename in the statusline
-vim.opt.t_Co = 16                                                  -- XXX set low number of colors to make highlights stick out, match bright colors without forcing bold
 vim.opt.tabstop = 2                                                -- display tabs as 2 spaces wide
-vim.opt.ttyfast = true                                             -- XXX send characters to terminal quickly for smoother experience
 vim.opt.updatetime = 100                                           -- write swp faster, to trigger faster git status reaction, vim-gitgutter
-vim.opt.wildmenu = true                                            -- XXX enable tab completion from insert mode
+vim.opt.wrap = false                                               -- default to not wrapping long lines
