@@ -1,6 +1,6 @@
-set nocompatible
+set nocompatible " disable vi-compatibility
 filetype plugin indent on
-syntax enable
+syntax enable " enable syntax highlighting
 
 " Automatically set up vim-plug, if necessary
 if empty(glob('~/.vim/autoload/plug.vim'))
