@@ -9,14 +9,15 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
   vim.cmd([[packadd packer.nvim]])
 end
 
-require('packer').startup({function(use)
-  use { 'stevearc/packer.nvim', branch = 'stevearc-git-env' } -- Package manager
+require("packer").startup({function(use)
+  use { "stevearc/packer.nvim", branch = "stevearc-git-env" } -- Package manager
 
-  use { 'altercation/vim-colors-solarized' }                  -- load solarized colorscheme
-  use { 'benmills/vimux' }                                    -- integrate vim with tmux
+  use { "altercation/vim-colors-solarized" }                  -- load solarized colorscheme
+  use { "benmills/vimux" }                                    -- integrate vim with tmux
+  use { "vim-scripts/ZoomWin" }                               -- ctrl+w o to zoom
 
   if is_bootstrap then
-    require('packer').sync()
+    require("packer").sync()
   end
 end, config = {
   git = {
@@ -90,7 +91,7 @@ function map(mode, shortcut, command)
 end
 
 function nmap(shortcut, command)
-  map('n', shortcut, command)
+  map("n", shortcut, command)
 end
 
 vim.g.mapleader = " " -- Set leader to spacebar
