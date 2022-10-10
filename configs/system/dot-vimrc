@@ -80,7 +80,7 @@ endif
 colorscheme solarized
 
 " set an 80 guide to try to keep lines short
-highlight ColorColumn ctermbg=lightgray
+highlight ColorColumn ctermbg=black
 let &colorcolumn=join(range(81,999),",")
 
 " Workaround a problem with solarized and vim-gitgutter.
