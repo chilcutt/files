@@ -16,6 +16,7 @@ require("packer").startup({function(use)
   use { "airblade/vim-gitgutter" }           -- display git status in signcolumn
   use { "altercation/vim-colors-solarized" } -- load solarized colorscheme
   use { "benmills/vimux" }                   -- integrate vim with tmux
+  use { "jose-elias-alvarez/null-ls.nvim", requires = { 'nvim-lua/plenary.nvim' } }  -- connect non-lsp sources to lsp (e.g. prettier, eslint, etc.)
   use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
@@ -160,4 +161,42 @@ map("", "<leader>gc", ":Git commit<cr>")
 -- vim-rhubarb
 map("", "<leader>go", ":GBrowse<cr>") -- open file in browser at Github, also works with visual mode
 map("", "<leader>gO", ":GBrowse <cword><cr>") -- open object in browser at Github, useful for commit sha
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- lsp config
+local autoformat_group = vim.api.nvim_create_augroup("LspAutoformat", { clear = true })
+
+-- Automatically format on save
+local on_attach = function(client, bufnr)
+  if
+    client.server_capabilities.documentFormattingProvider
+  then
+    -- Remove prior autocmds so this only triggers once
+    vim.api.nvim_clear_autocmds({
+      group = autoformat_group,
+      buffer = bufnr,
+    })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      callback = function()
+        vim.lsp.buf.format({
+          timeout_ms = 500,
+        })
+      end,
+      group = autoformat_group,
+      buffer = bufnr,
+    })
+  end
+end
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- null-ls.nvim
+local null_ls = require("null-ls")
+null_ls.setup({
+  on_attach = on_attach,
+  sources = {
+    null_ls.builtins.formatting.prettier,
+  },
+})
 --------------------------------------------------------------------------------
