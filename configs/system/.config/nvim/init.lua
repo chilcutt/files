@@ -16,9 +16,10 @@ require("packer").startup({function(use)
   use { "airblade/vim-gitgutter" }           -- display git status in signcolumn
   use { "altercation/vim-colors-solarized" } -- load solarized colorscheme
   use { "benmills/vimux" }                   -- integrate vim with tmux
-  use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
+  use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
+  use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
 
   if is_bootstrap then
     require("packer").sync()
@@ -127,4 +128,9 @@ nmap("<C-P>", ":Files<cr>") -- Start fzf search of files
 --------------------------------------------------------------------------------
 -- fzf.vim
 vim.g.fzf_layout = { down = "~20%" }
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- vim-ripgrep
+vim.g.rg_highlight = 1 -- Highlight matches in results and opened file
 --------------------------------------------------------------------------------

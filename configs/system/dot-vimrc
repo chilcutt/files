@@ -14,13 +14,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'           " display git status in signcolumn
 Plug 'altercation/vim-colors-solarized' " load solarized colorscheme
 Plug 'benmills/vimux'                   " integrate vim with tmux
+Plug 'jremmen/vim-ripgrep'              " integration with ripgrep, support for :Rg
 Plug 'junegunn/fzf'                     " base fzf integration repository, required by fzf.vim
 Plug 'junegunn/fzf.vim'                 " better vim support for fzf
 Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
 
 " TODO below
 Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
-Plug 'jremmen/vim-ripgrep'              " integration with ripgrep, support for :Rg
 Plug 'majutsushi/tagbar'                " adds integration with tags file
 Plug 'maxmellon/vim-jsx-pretty'         " language support for jsx/tsx
 Plug 'ngmy/vim-rubocop'                 " rubocop integration
