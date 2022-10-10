@@ -1,4 +1,5 @@
--- Install packer
+--------------------------------------------------------------------------------
+-- Install packer and plugins
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 local is_bootstrap = false
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
@@ -12,9 +13,12 @@ end
 require("packer").startup({function(use)
   use { "stevearc/packer.nvim", branch = "stevearc-git-env" } -- Package manager
 
-  use { "altercation/vim-colors-solarized" }                  -- load solarized colorscheme
-  use { "benmills/vimux" }                                    -- integrate vim with tmux
-  use { "vim-scripts/ZoomWin" }                               -- ctrl+w o to zoom
+  use { "airblade/vim-gitgutter" }           -- display git status in signcolumn
+  use { "altercation/vim-colors-solarized" } -- load solarized colorscheme
+  use { "benmills/vimux" }                   -- integrate vim with tmux
+  use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
+  use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
+  use { "junegunn/fzf.vim" }                 -- better vim support for fzf
 
   if is_bootstrap then
     require("packer").sync()
@@ -48,6 +52,7 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   group = packer_group,
   pattern = vim.fn.expand("$MYVIMRC"),
 })
+--------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 -- Appearance
@@ -117,4 +122,9 @@ nmap("<leader>t", ":tabnew<cr>")
 nmap("<leader>f", ":Rg<space>") -- Start search with ripgrep
 nmap("<leader>F", ":Find<space>") -- Start fzf search of contents, TODO- swtich to CR?
 nmap("<C-P>", ":Files<cr>") -- Start fzf search of files
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- fzf.vim
+vim.g.fzf_layout = { down = "~20%" }
 --------------------------------------------------------------------------------

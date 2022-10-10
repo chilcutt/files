@@ -10,13 +10,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+" Keep below
 Plug 'airblade/vim-gitgutter'           " display git status in signcolumn
 Plug 'altercation/vim-colors-solarized' " load solarized colorscheme
 Plug 'benmills/vimux'                   " integrate vim with tmux
-Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
-Plug 'chilcutt/vim-ripgrep'              " integration with ripgrep, support for :Rg
-Plug 'junegunn/fzf'                     " base fzf integration repository
+Plug 'junegunn/fzf'                     " base fzf integration repository, required by fzf.vim
 Plug 'junegunn/fzf.vim'                 " better vim support for fzf
+Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
+
+" TODO below
+Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
+Plug 'jremmen/vim-ripgrep'              " integration with ripgrep, support for :Rg
 Plug 'majutsushi/tagbar'                " adds integration with tags file
 Plug 'maxmellon/vim-jsx-pretty'         " language support for jsx/tsx
 Plug 'ngmy/vim-rubocop'                 " rubocop integration
@@ -32,7 +36,6 @@ Plug 'tpope/vim-rails'                  " ruby on rails integration
 Plug 'tpope/vim-rake'                   " rake integration for non-rails ruby projects
 Plug 'tpope/vim-rhubarb'                " github-specific git integration
 Plug 'tpope/vim-surround'               " surrounding movement
-Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
 Plug 'vim-scripts/matchit.zip'          " adds support for more % matches
 Plug 'w0rp/ale'                         " asynchronous linting
 Plug 'godlygeek/tabular'                " dependency for vim-markdown
