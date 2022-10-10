@@ -19,6 +19,7 @@ Plug 'junegunn/fzf'                     " base fzf integration repository, requi
 Plug 'junegunn/fzf.vim'                 " better vim support for fzf
 Plug 'tpope/vim-commentary'             " comment out blocks of lines
 Plug 'tpope/vim-fugitive'               " git integration
+Plug 'tpope/vim-rhubarb'                " github-specific git integration
 Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
 
 " TODO below
@@ -34,7 +35,6 @@ Plug 'tommcdo/vim-lion'                 " align text around a character
 Plug 'tpope/vim-endwise'                " close ruby blocks automatically TODO - is there something better out there?
 Plug 'tpope/vim-rails'                  " ruby on rails integration
 Plug 'tpope/vim-rake'                   " rake integration for non-rails ruby projects
-Plug 'tpope/vim-rhubarb'                " github-specific git integration
 Plug 'tpope/vim-surround'               " surrounding movement
 Plug 'vim-scripts/matchit.zip'          " adds support for more % matches
 Plug 'w0rp/ale'                         " asynchronous linting
@@ -177,7 +177,8 @@ map <leader>gd :Git diff<cr>
 map <leader>gv :Gvdiffsplit<cr>
 map <leader>ga :Git add -p<cr>
 map <leader>gc :Git commit<cr>
-map <leader>gw :GBrowse<cr> " open file in browser at Github
+map <leader>go :GBrowse<cr> " open file in browser at Github, also works with visual mode
+map <leader>gO :GBrowse<space><cword><cr> " open object in browser at Github, useful for commit sha
 
 let s:ruby_runner = "bundle exec rspec"
 let s:javascript_runner = "yarn run jest"

@@ -20,8 +20,9 @@ require("packer").startup({function(use)
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
   use { "tpope/vim-commentary" }             -- comment out blocks of lines
-  use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
   use { "tpope/vim-fugitive" }               -- git integration
+  use { "tpope/vim-rhubarb" }                -- github-specific git integration
+  use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
 
   if is_bootstrap then
     require("packer").sync()
@@ -152,4 +153,10 @@ map("", "<leader>gd", ":Git diff<cr>")
 map("", "<leader>gv", ":Gvdiffsplit<cr>")
 map("", "<leader>ga", ":Git add -p<cr>")
 map("", "<leader>gc", ":Git commit<cr>")
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- vim-rhubarb
+map("", "<leader>go", ":GBrowse<cr>") -- open file in browser at Github, also works with visual mode
+map("", "<leader>gO", ":GBrowse <cword><cr>") -- open object in browser at Github, useful for commit sha
 --------------------------------------------------------------------------------
