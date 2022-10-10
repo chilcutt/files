@@ -55,7 +55,6 @@ set hidden                                                 " allow buffers to be
 set hlsearch                                               " highlight all search matching
 set ignorecase                                             " perform case-insensitive searches
 set laststatus=2                                           " always show the statusline
-set lazyredraw                                             " redraw less often for smoother scrolling
 set list                                                   " show whitespace characters in listchars
 set listchars=tab:>\ ,trail:\.,extends:>,precedes:<,nbsp:+ " mark tabs, trailing spaces, non-breakable spaces
 set nowrap                                                 " default to not wrapping long lines

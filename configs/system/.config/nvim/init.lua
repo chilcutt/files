@@ -75,7 +75,6 @@ vim.cmd("autocmd ColorScheme * highlight! link SignColumn LineNr")
 vim.opt.cmdheight = 2                                              -- increase the space for commands so the window doesn't feel jumpy
 vim.opt.expandtab = true                                           -- when pressing tab, insert spaces
 vim.opt.ignorecase = true                                          -- perform case-insensitive searches
-vim.opt.lazyredraw = true                                          -- REMOVEBOTH redraw less often for smoother scrolling
 vim.opt.list = true                                                -- show whitespace characters in listchars
 vim.opt.listchars = "tab:> ,trail:.,extends:>,precedes:<,nbsp:+"   -- mark tabs, trailing spaces, non-breakable spaces
 vim.opt.nrformats = "alpha,hex,bin"                                -- set alpha, 0x, and 0b to be incremented, disable octal because decimal is often zero-padded
