@@ -18,6 +18,7 @@ Plug 'jremmen/vim-ripgrep'              " integration with ripgrep, support for 
 Plug 'junegunn/fzf'                     " base fzf integration repository, required by fzf.vim
 Plug 'junegunn/fzf.vim'                 " better vim support for fzf
 Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
+Plug 'tpope/vim-commentary'             " comment out blocks of lines
 
 " TODO below
 Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
@@ -29,7 +30,6 @@ Plug 'prettier/vim-prettier'            " prettier integration
 Plug 'scrooloose/nerdtree'              " tree file explorer
 Plug 'sheerun/vim-polyglot'             " TODO - replace with individual plugins
 Plug 'tommcdo/vim-lion'                 " align text around a character
-Plug 'tpope/vim-commentary'             " comment out blocks of lines
 Plug 'tpope/vim-endwise'                " close ruby blocks automatically TODO - is there something better out there?
 Plug 'tpope/vim-fugitive'               " git integration
 Plug 'tpope/vim-rails'                  " ruby on rails integration

@@ -19,6 +19,7 @@ require("packer").startup({function(use)
   use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
+  use { "tpope/vim-commentary" }             -- comment out blocks of lines
   use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
 
   if is_bootstrap then
@@ -120,17 +121,25 @@ nmap("<leader>l", "<C-w>l")
 
 nmap("<leader>t", ":tabnew<cr>")
 
-nmap("<leader>f", ":Rg<space>") -- Start search with ripgrep
 nmap("<leader>F", ":Find<space>") -- Start fzf search of contents, TODO- swtich to CR?
-nmap("<C-P>", ":Files<cr>") -- Start fzf search of files
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 -- fzf.vim
 vim.g.fzf_layout = { down = "~20%" }
+
+nmap("<C-P>", ":Files<cr>") -- Start fzf search of files
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 -- vim-ripgrep
 vim.g.rg_highlight = 1 -- Highlight matches in results and opened file
+
+nmap("<leader>f", ":Rg<space>") -- Start search with ripgrep
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- vim-commentary
+map("x", "<leader>/", "<Plug>Commentary<cr>")
+nmap("<leader>/", "<Plug>CommentaryLine<cr>")
 --------------------------------------------------------------------------------
