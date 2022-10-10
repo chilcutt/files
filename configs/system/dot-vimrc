@@ -11,7 +11,7 @@ endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'           " display git status in signcolumn
-Plug 'altercation/vim-colors-solarized' " load solarized colorscheme TODO: configuration https://vimawesome.com/plugin/vim-colors-solarized-ours
+Plug 'altercation/vim-colors-solarized' " load solarized colorscheme
 Plug 'benmills/vimux'                   " integrate vim with tmux
 Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
 Plug 'chilcutt/vim-ripgrep'              " integration with ripgrep, support for :Rg
