@@ -10,8 +10,10 @@ if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
 end
 
 require('packer').startup({function(use)
-  use { 'stevearc/packer.nvim', branch = 'stevearc-git-env' }                     -- Package manager
-  use { 'benmills/vimux' } -- integrate vim with tmux
+  use { 'stevearc/packer.nvim', branch = 'stevearc-git-env' } -- Package manager
+
+  use { 'altercation/vim-colors-solarized' }                  -- load solarized colorscheme
+  use { 'benmills/vimux' }                                    -- integrate vim with tmux
 
   if is_bootstrap then
     require('packer').sync()
@@ -46,12 +48,28 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = vim.fn.expand("$MYVIMRC"),
 })
 
+--------------------------------------------------------------------------------
+-- Appearance
+--
+vim.cmd("colorscheme solarized")
+vim.cmd("highlight ColorColumn ctermbg=black")
+vim.cmd("let &colorcolumn=join(range(81,999),',')")
+
+-- Workaround a problem with solarized and vim-gitgutter.
+-- https://github.com/airblade/vim-gitgutter/issues/696
+vim.cmd("highlight! link SignColumn LineNr")
+vim.cmd("autocmd ColorScheme * highlight! link SignColumn LineNr")
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Options
+--
 vim.opt.cmdheight = 2                                              -- increase the space for commands so the window doesn't feel jumpy
 vim.opt.expandtab = true                                           -- when pressing tab, insert spaces
 vim.opt.ignorecase = true                                          -- perform case-insensitive searches
 vim.opt.lazyredraw = true                                          -- REMOVEBOTH redraw less often for smoother scrolling
 vim.opt.list = true                                                -- show whitespace characters in listchars
-vim.opt.listchars = "tab:>\ ,trail:\.,extends:>,precedes:<,nbsp:+" -- mark tabs, trailing spaces, non-breakable spaces
+vim.opt.listchars = "tab:> ,trail:.,extends:>,precedes:<,nbsp:+"   -- mark tabs, trailing spaces, non-breakable spaces
 vim.opt.nrformats = "alpha,hex,bin"                                -- set alpha, 0x, and 0b to be incremented, disable octal because decimal is often zero-padded
 vim.opt.number = true                                              -- display the line number in before each line
 vim.opt.shiftwidth = 2                                             -- set indentation with >> to 2
@@ -62,3 +80,40 @@ vim.opt.statusline = "%F"                                          -- display th
 vim.opt.tabstop = 2                                                -- display tabs as 2 spaces wide
 vim.opt.updatetime = 100                                           -- write swp faster, to trigger faster git status reaction, vim-gitgutter
 vim.opt.wrap = false                                               -- default to not wrapping long lines
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- Mappings
+--
+function map(mode, shortcut, command)
+  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+end
+
+function nmap(shortcut, command)
+  map('n', shortcut, command)
+end
+
+vim.g.mapleader = " " -- Set leader to spacebar
+nmap("<leader>w", ":w<cr>")
+nmap("<leader>q", ":q<cr>")
+nmap("<leader>x", ":x<cr>")
+nmap("<leader>o", "o<esc>")
+nmap("<leader>O", "O<esc>")
+map("", "<leader>y", "\"+y")
+map("", "<leader>p", "\"+p")
+map("i", "jk", "<esc>") -- set jk to escape to normal mode
+
+nmap("<leader>v", ":vsp<cr><C-w>l")
+nmap("<leader>s", ":sp<cr><C-w>j")
+nmap("<leader><space>", "<C-w><C-w>")
+nmap("<leader>h", "<C-w>h")
+nmap("<leader>j", "<C-w>j")
+nmap("<leader>k", "<C-w>k")
+nmap("<leader>l", "<C-w>l")
+
+nmap("<leader>t", ":tabnew<cr>")
+
+nmap("<leader>f", ":Rg<space>") -- Start search with ripgrep
+nmap("<leader>F", ":Find<space>") -- Start fzf search of contents, TODO- swtich to CR?
+nmap("<C-P>", ":Files<cr>") -- Start fzf search of files
+--------------------------------------------------------------------------------
