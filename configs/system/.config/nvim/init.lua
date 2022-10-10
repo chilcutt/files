@@ -111,6 +111,7 @@ nmap("<leader>O", "O<esc>")
 map("", "<leader>y", "\"+y")
 map("", "<leader>p", "\"+p")
 map("i", "jk", "<esc>") -- set jk to escape to normal mode
+nmap("<leader>`", ":let &bg=(&bg=='light'?'dark':'light')<cr>") -- Toggle between light/dark background
 
 nmap("<leader>v", ":vsp<cr><C-w>l")
 nmap("<leader>s", ":sp<cr><C-w>j")

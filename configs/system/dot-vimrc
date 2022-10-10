@@ -320,3 +320,6 @@ function! MarkdownMode()
 endfunction
 
 nmap <leader>md :call MarkdownMode()<cr> " launch markdown preview and start goyo mode
+
+" Toggle between light/dark background
+map <leader>` :let &bg=(&bg=='light'?'dark':'light')<cr>
