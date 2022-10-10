@@ -66,7 +66,6 @@ set smartcase                                              " when a search query
 set smarttab                                               " enable tabbing based on shiftwidth and tabstop
 set softtabstop=2                                          " set each tab to insert 2 spaces with expandtab
 set statusline+=%F                                         " display the filename in the statusline
-set t_Co=16                                                " set low number of colors to make highlights stick out, match bright colors without forcing bold
 set tabstop=2                                              " display tabs as 2 spaces wide
 set ttyfast                                                " send characters to terminal quickly for smoother experience
 set updatetime=100                                         " write swp faster, to trigger faster git status reaction, vim-gitgutter
@@ -82,7 +81,7 @@ endif
 colorscheme solarized
 
 " set an 80 guide to try to keep lines short
-highlight ColorColumn ctermbg=black
+highlight ColorColumn ctermbg=lightgray
 let &colorcolumn=join(range(81,999),",")
 
 " Workaround a problem with solarized and vim-gitgutter.
@@ -312,7 +311,6 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " limelight configuration
-set t_Co=256
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
 
