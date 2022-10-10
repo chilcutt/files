@@ -1,6 +1,6 @@
-set nocompatible
+set nocompatible " disable vi-compatibility
 filetype plugin indent on
-syntax enable
+syntax enable " enable syntax highlighting
 
 " Automatically set up vim-plug, if necessary
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -10,13 +10,20 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
+" Keep below
 Plug 'airblade/vim-gitgutter'           " display git status in signcolumn
-Plug 'altercation/vim-colors-solarized' " load solarized colorscheme TODO: configuration https://vimawesome.com/plugin/vim-colors-solarized-ours
+Plug 'altercation/vim-colors-solarized' " load solarized colorscheme
 Plug 'benmills/vimux'                   " integrate vim with tmux
-Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
-Plug 'chilcutt/vim-ripgrep'              " integration with ripgrep, support for :Rg
-Plug 'junegunn/fzf'                     " base fzf integration repository
+Plug 'jremmen/vim-ripgrep'              " integration with ripgrep, support for :Rg
+Plug 'junegunn/fzf'                     " base fzf integration repository, required by fzf.vim
 Plug 'junegunn/fzf.vim'                 " better vim support for fzf
+Plug 'tpope/vim-commentary'             " comment out blocks of lines
+Plug 'tpope/vim-fugitive'               " git integration
+Plug 'tpope/vim-rhubarb'                " github-specific git integration
+Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
+
+" TODO below
+Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
 Plug 'majutsushi/tagbar'                " adds integration with tags file
 Plug 'maxmellon/vim-jsx-pretty'         " language support for jsx/tsx
 Plug 'ngmy/vim-rubocop'                 " rubocop integration
@@ -25,14 +32,10 @@ Plug 'prettier/vim-prettier'            " prettier integration
 Plug 'scrooloose/nerdtree'              " tree file explorer
 Plug 'sheerun/vim-polyglot'             " TODO - replace with individual plugins
 Plug 'tommcdo/vim-lion'                 " align text around a character
-Plug 'tpope/vim-commentary'             " comment out blocks of lines
 Plug 'tpope/vim-endwise'                " close ruby blocks automatically TODO - is there something better out there?
-Plug 'tpope/vim-fugitive'               " git integration
 Plug 'tpope/vim-rails'                  " ruby on rails integration
 Plug 'tpope/vim-rake'                   " rake integration for non-rails ruby projects
-Plug 'tpope/vim-rhubarb'                " github-specific git integration
 Plug 'tpope/vim-surround'               " surrounding movement
-Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
 Plug 'vim-scripts/matchit.zip'          " adds support for more % matches
 Plug 'w0rp/ale'                         " asynchronous linting
 Plug 'godlygeek/tabular'                " dependency for vim-markdown
@@ -52,7 +55,6 @@ set hidden                                                 " allow buffers to be
 set hlsearch                                               " highlight all search matching
 set ignorecase                                             " perform case-insensitive searches
 set laststatus=2                                           " always show the statusline
-set lazyredraw                                             " redraw less often for smoother scrolling
 set list                                                   " show whitespace characters in listchars
 set listchars=tab:>\ ,trail:\.,extends:>,precedes:<,nbsp:+ " mark tabs, trailing spaces, non-breakable spaces
 set nowrap                                                 " default to not wrapping long lines
@@ -64,12 +66,12 @@ set smartcase                                              " when a search query
 set smarttab                                               " enable tabbing based on shiftwidth and tabstop
 set softtabstop=2                                          " set each tab to insert 2 spaces with expandtab
 set statusline+=%F                                         " display the filename in the statusline
-set t_Co=16                                                " set low number of colors to make highlights stick out, match bright colors without forcing bold
 set tabstop=2                                              " display tabs as 2 spaces wide
 set ttyfast                                                " send characters to terminal quickly for smoother experience
 set updatetime=100                                         " write swp faster, to trigger faster git status reaction, vim-gitgutter
 set wildmenu                                               " enable tab completion from insert mode
 
+" TODO - does this work?
 " When using tmux, use escape sequence to get t_RB value from the outer shell
 " so we can set the background value correctly.
 if exists("$TMUX")
@@ -79,8 +81,13 @@ endif
 colorscheme solarized
 
 " set an 80 guide to try to keep lines short
-highlight ColorColumn ctermbg=black
+highlight ColorColumn ctermbg=lightgray
 let &colorcolumn=join(range(81,999),",")
+
+" Workaround a problem with solarized and vim-gitgutter.
+" https://github.com/airblade/vim-gitgutter/issues/696
+highlight! link SignColumn LineNr
+autocmd ColorScheme * highlight! link SignColumn LineNr
 
 " highlight all tabs in red
 autocmd ColorScheme * highlight AllTabs ctermbg=red guibg=red
@@ -137,6 +144,7 @@ map <leader>y "+y
 map <leader>p "+p
 inoremap jk <esc> " set jk to escape to normal mode
 
+" TODO - is this still needed?
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L> " clear hlsearch with ctrl+l
 
 nmap <leader>v :vsp<cr><C-w>l
@@ -149,18 +157,27 @@ nmap <leader>l <C-w>l
 
 nmap <leader>t :tabnew<cr>
 
+" TODO - do you want this?
 " nmap <leader>r :NERDTreeFind<cr>
 " nmap <leader>d :NERDTreeToggle<cr>
 
+" TODO - do you want this?
 nmap <c-t> :TagbarToggle<cr>
 
+" TODO - is Rg still the best utility to default? switch with fzf?
 nmap <leader>f :Rg<space>
 nmap <leader>F :Find<space>
 nnoremap <silent> <C-P> :Files<cr>
 
 map <leader>gs :GitGutterToggle<cr>
-map <leader>gb :Gblame<cr>
-map <leader>gw :Gbrowse<cr> " open file in browser at Github
+map <leader>gs :Git<cr>
+map <leader>gb :Git blame<cr>
+map <leader>gd :Git diff<cr>
+map <leader>gv :Gvdiffsplit<cr>
+map <leader>ga :Git add -p<cr>
+map <leader>gc :Git commit<cr>
+map <leader>go :GBrowse<cr> " open file in browser at Github, also works with visual mode
+map <leader>gO :GBrowse<space><cword><cr> " open object in browser at Github, useful for commit sha
 
 let s:ruby_runner = "bundle exec rspec"
 let s:javascript_runner = "yarn run jest"
@@ -202,6 +219,7 @@ nmap <leader>bb :VimuxCloseRunner<cr>
 nmap <leader>bc :VimuxPromptCommand<cr>
 nmap <leader>br :VimuxRunLastCommand<cr>
 
+" TODO - intended to load alternate file, does this even work?
 nmap <leader>a :A<cr>
 
 xmap <leader>/ <Plug>Commentary<cr>
@@ -293,7 +311,6 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " limelight configuration
-set t_Co=256
 let g:limelight_conceal_ctermfg = 'gray'
 let g:limelight_conceal_ctermfg = 240
 
