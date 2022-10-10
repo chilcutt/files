@@ -70,6 +70,7 @@ set ttyfast                                                " send characters to 
 set updatetime=100                                         " write swp faster, to trigger faster git status reaction, vim-gitgutter
 set wildmenu                                               " enable tab completion from insert mode
 
+" TODO - does this work?
 " When using tmux, use escape sequence to get t_RB value from the outer shell
 " so we can set the background value correctly.
 if exists("$TMUX")
@@ -79,8 +80,13 @@ endif
 colorscheme solarized
 
 " set an 80 guide to try to keep lines short
-highlight ColorColumn ctermbg=black
+highlight ColorColumn ctermbg=lightgray
 let &colorcolumn=join(range(81,999),",")
+
+" Workaround a problem with solarized and vim-gitgutter.
+" https://github.com/airblade/vim-gitgutter/issues/696
+highlight! link SignColumn LineNr
+autocmd ColorScheme * highlight! link SignColumn LineNr
 
 " highlight all tabs in red
 autocmd ColorScheme * highlight AllTabs ctermbg=red guibg=red
@@ -137,6 +143,7 @@ map <leader>y "+y
 map <leader>p "+p
 inoremap jk <esc> " set jk to escape to normal mode
 
+" TODO - is this still needed?
 nnoremap <silent> <C-L> :nohlsearch<C-R>=has('diff')?'<Bar>diffupdate':''<CR><CR><C-L> " clear hlsearch with ctrl+l
 
 nmap <leader>v :vsp<cr><C-w>l
@@ -149,18 +156,21 @@ nmap <leader>l <C-w>l
 
 nmap <leader>t :tabnew<cr>
 
+" TODO - do you want this?
 " nmap <leader>r :NERDTreeFind<cr>
 " nmap <leader>d :NERDTreeToggle<cr>
 
+" TODO - do you want this?
 nmap <c-t> :TagbarToggle<cr>
 
+" TODO - is Rg still the best utility to default? switch with fzf?
 nmap <leader>f :Rg<space>
 nmap <leader>F :Find<space>
 nnoremap <silent> <C-P> :Files<cr>
 
 map <leader>gs :GitGutterToggle<cr>
-map <leader>gb :Gblame<cr>
-map <leader>gw :Gbrowse<cr> " open file in browser at Github
+map <leader>gb :Git blame<cr>
+map <leader>gw :GBrowse<cr> " open file in browser at Github
 
 let s:ruby_runner = "bundle exec rspec"
 let s:javascript_runner = "yarn run jest"
@@ -202,6 +212,7 @@ nmap <leader>bb :VimuxCloseRunner<cr>
 nmap <leader>bc :VimuxPromptCommand<cr>
 nmap <leader>br :VimuxRunLastCommand<cr>
 
+" TODO - intended to load alternate file, does this even work?
 nmap <leader>a :A<cr>
 
 xmap <leader>/ <Plug>Commentary<cr>
