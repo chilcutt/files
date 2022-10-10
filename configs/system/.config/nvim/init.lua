@@ -21,6 +21,7 @@ require("packer").startup({function(use)
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
   use { "tpope/vim-commentary" }             -- comment out blocks of lines
   use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
+  use { "tpope/vim-fugitive" }               -- git integration
 
   if is_bootstrap then
     require("packer").sync()
@@ -141,4 +142,14 @@ nmap("<leader>f", ":Rg<space>") -- Start search with ripgrep
 -- vim-commentary
 map("x", "<leader>/", "<Plug>Commentary<cr>")
 nmap("<leader>/", "<Plug>CommentaryLine<cr>")
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- vim-fugitive
+map("", "<leader>gs", ":Git<cr>")
+map("", "<leader>gb", ":Git blame<cr>")
+map("", "<leader>gd", ":Git diff<cr>")
+map("", "<leader>gv", ":Gvdiffsplit<cr>")
+map("", "<leader>ga", ":Git add -p<cr>")
+map("", "<leader>gc", ":Git commit<cr>")
 --------------------------------------------------------------------------------

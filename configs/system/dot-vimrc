@@ -17,8 +17,9 @@ Plug 'benmills/vimux'                   " integrate vim with tmux
 Plug 'jremmen/vim-ripgrep'              " integration with ripgrep, support for :Rg
 Plug 'junegunn/fzf'                     " base fzf integration repository, required by fzf.vim
 Plug 'junegunn/fzf.vim'                 " better vim support for fzf
-Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
 Plug 'tpope/vim-commentary'             " comment out blocks of lines
+Plug 'tpope/vim-fugitive'               " git integration
+Plug 'vim-scripts/ZoomWin'              " ctrl+w o to zoom
 
 " TODO below
 Plug 'docunext/closetag.vim'            " close HTML tags TODO: https://vimawesome.com/plugin/vim-closetag instead?
@@ -31,7 +32,6 @@ Plug 'scrooloose/nerdtree'              " tree file explorer
 Plug 'sheerun/vim-polyglot'             " TODO - replace with individual plugins
 Plug 'tommcdo/vim-lion'                 " align text around a character
 Plug 'tpope/vim-endwise'                " close ruby blocks automatically TODO - is there something better out there?
-Plug 'tpope/vim-fugitive'               " git integration
 Plug 'tpope/vim-rails'                  " ruby on rails integration
 Plug 'tpope/vim-rake'                   " rake integration for non-rails ruby projects
 Plug 'tpope/vim-rhubarb'                " github-specific git integration
@@ -171,7 +171,12 @@ nmap <leader>F :Find<space>
 nnoremap <silent> <C-P> :Files<cr>
 
 map <leader>gs :GitGutterToggle<cr>
+map <leader>gs :Git<cr>
 map <leader>gb :Git blame<cr>
+map <leader>gd :Git diff<cr>
+map <leader>gv :Gvdiffsplit<cr>
+map <leader>ga :Git add -p<cr>
+map <leader>gc :Git commit<cr>
 map <leader>gw :GBrowse<cr> " open file in browser at Github
 
 let s:ruby_runner = "bundle exec rspec"
