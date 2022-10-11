@@ -180,7 +180,7 @@ local on_attach = function(client, bufnr)
     vim.api.nvim_create_autocmd("BufWritePre", {
       callback = function()
         vim.lsp.buf.format({
-          timeout_ms = 500,
+          bufnr = bufnr
         })
       end,
       group = autoformat_group,
