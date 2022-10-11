@@ -17,13 +17,16 @@ require("packer").startup({function(use)
   use { "airblade/vim-gitgutter" }           -- display git status in signcolumn
   use { "altercation/vim-colors-solarized" } -- load solarized colorscheme
   use { "benmills/vimux" }                   -- integrate vim with tmux
+  use { "hrsh7th/cmp-buffer" } -- nvim-cmp completions for file buffer
+  use { "hrsh7th/cmp-nvim-lua" } -- nvim-cmp completions for nvim lua
+  use { "hrsh7th/cmp-path" } --nvim-cmp completions for file path
   use { "hrsh7th/nvim-cmp", requires = { "hrsh7th/cmp-nvim-lsp" } }               -- Autocompletion
   use { "jose-elias-alvarez/null-ls.nvim", requires = { 'nvim-lua/plenary.nvim' } }  -- connect non-lsp sources to lsp (e.g. prettier, eslint, etc.)
   use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
   use { "neovim/nvim-lspconfig" }            -- Configurations for builtin lsp
-  use { "onsails/lspkind-nvim" }                                                     -- Snazzy LSP icons (requires patched font) 
+  use { "onsails/lspkind-nvim" }             -- Snazzy LSP icons (requires patched font)
   use { "tpope/vim-commentary" }             -- comment out blocks of lines
   use { "tpope/vim-fugitive" }               -- git integration
   use { "tpope/vim-rhubarb" }                -- github-specific git integration
@@ -233,4 +236,70 @@ null_ls.setup({
     null_ls.builtins.formatting.stylelint,
   },
 })
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- nvim-cmp, LuaSnip, lspkind-nvim
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load()
+
+cmp.setup({
+  completion = {
+    autocomplete = false, -- Disable automatic autocomplete, use manual trigger
+  },
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      elseif cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  formatting = {
+    format = require("lspkind").cmp_format({
+      mode = "text",
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+      },
+    }),
+  },
+  sources = {
+    { name = "nvim_lua" }, -- Shows suggestions for lua
+    { name = "nvim_lsp" }, -- Shows suggestions based on the response of a language server
+    { name = "luasnip" }, -- Suggests available snippets and expands them if chosen
+    { name = "buffer", keyword_length = 5 }, -- Suggests words found in the current buffer
+  },
+})
+
+map("i", "<C-Space>", "<Cmd>lua require('cmp').complete()<cr>") -- Trigger completion in insert-mode with ctrl+space
 --------------------------------------------------------------------------------
