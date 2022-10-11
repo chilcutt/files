@@ -13,14 +13,17 @@ end
 require("packer").startup({function(use)
   use { "stevearc/packer.nvim", branch = "stevearc-git-env" } -- Package manager
 
+  use { "L3MON4D3/LuaSnip", requires = { "saadparwaiz1/cmp_luasnip" } }           -- Snippet Engine and Snippet Expansion
   use { "airblade/vim-gitgutter" }           -- display git status in signcolumn
   use { "altercation/vim-colors-solarized" } -- load solarized colorscheme
   use { "benmills/vimux" }                   -- integrate vim with tmux
+  use { "hrsh7th/nvim-cmp", requires = { "hrsh7th/cmp-nvim-lsp" } }               -- Autocompletion
   use { "jose-elias-alvarez/null-ls.nvim", requires = { 'nvim-lua/plenary.nvim' } }  -- connect non-lsp sources to lsp (e.g. prettier, eslint, etc.)
   use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
   use { "neovim/nvim-lspconfig" }            -- Configurations for builtin lsp
+  use { "onsails/lspkind-nvim" }                                                     -- Snazzy LSP icons (requires patched font) 
   use { "tpope/vim-commentary" }             -- comment out blocks of lines
   use { "tpope/vim-fugitive" }               -- git integration
   use { "tpope/vim-rhubarb" }                -- github-specific git integration
@@ -192,6 +195,17 @@ end
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
+-- nvim-lspconfig
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- Set up typescript lsp
+require("lspconfig")["tsserver"].setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
 -- null-ls.nvim
 local util = require("lspconfig.util")
 local function eslint_cwd(params)
@@ -201,6 +215,7 @@ end
 local null_ls = require("null-ls")
 null_ls.setup({
   on_attach = on_attach,
+  capabilities = capabilities,
   sources = {
     null_ls.builtins.formatting.prettierd,
 
