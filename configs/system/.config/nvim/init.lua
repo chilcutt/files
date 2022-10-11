@@ -129,9 +129,21 @@ nmap("<leader>j", "<C-w>j")
 nmap("<leader>k", "<C-w>k")
 nmap("<leader>l", "<C-w>l")
 
+nmap("<leader>n", ":n<cr>")
+nmap("<leader>N", ":N<cr>")
+nmap("<leader>cn", ":cnext<cr>")
+nmap("<leader>cp", ":cprevious<cr>")
+
 nmap("<leader>t", ":tabnew<cr>")
 
 nmap("<leader>F", ":Find<space>") -- Start fzf search of contents, TODO- swtich to CR?
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- vimux
+nmap("<leader>bb", ":VimuxCloseRunner<cr>")
+nmap("<leader>bc", ":VimuxPromptCommand<cr>")
+nmap("<leader>br", ":VimuxRunLastCommand<cr>")
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
