@@ -313,5 +313,18 @@ cmp.setup({
   },
 })
 
-map("i", "<C-Space>", "<Cmd>lua require('cmp').complete()<cr>") -- Trigger completion in insert-mode with ctrl+space
+function FixPrevError()
+  vim.diagnostic.goto_prev()
+  vim.lsp.buf.code_action()
+end
+
+function FixNextError()
+  vim.diagnostic.goto_next()
+  vim.lsp.buf.code_action()
+end
+
+map("i", "<C-Space>", "<cmd>lua require('cmp').complete()<cr>") -- Trigger completion in insert-mode with ctrl+space
+nmap("<leader>LL", "<cmd>lua vim.lsp.buf.code_action()<cr>") -- Trigger code action under cursor
+nmap("<leader>LP", "<cmd>lua FixPrevError()<cr>") -- Go to previous lsp issue and launch code action
+nmap("<leader>LN", "<cmd>lua FixNextError()<cr>") -- Go to next lsp issue and launch code action
 --------------------------------------------------------------------------------
