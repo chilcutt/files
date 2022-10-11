@@ -20,6 +20,7 @@ require("packer").startup({function(use)
   use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
+  use { "neovim/nvim-lspconfig" }            -- Configurations for builtin lsp
   use { "tpope/vim-commentary" }             -- comment out blocks of lines
   use { "tpope/vim-fugitive" }               -- git integration
   use { "tpope/vim-rhubarb" }                -- github-specific git integration
@@ -192,11 +193,29 @@ end
 
 --------------------------------------------------------------------------------
 -- null-ls.nvim
+local util = require("lspconfig.util")
+local function eslint_cwd(params)
+  return util.root_pattern(".eslintrc.*")(params.bufname)
+end
+
 local null_ls = require("null-ls")
 null_ls.setup({
   on_attach = on_attach,
   sources = {
     null_ls.builtins.formatting.prettierd,
+
+    null_ls.builtins.code_actions.eslint_d.with({
+      cwd = eslint_cwd
+    }),
+    null_ls.builtins.diagnostics.eslint_d.with({
+      cwd = eslint_cwd
+    }),
+    null_ls.builtins.formatting.eslint_d.with({
+      cwd = eslint_cwd
+    }),
+
+    null_ls.builtins.diagnostics.stylelint,
+    null_ls.builtins.formatting.stylelint,
   },
 })
 --------------------------------------------------------------------------------
