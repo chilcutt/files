@@ -174,6 +174,7 @@ map("", "<leader>gd", ":Git diff<cr>")
 map("", "<leader>gv", ":Gvdiffsplit<cr>")
 map("", "<leader>ga", ":Git add -p<cr>")
 map("", "<leader>gc", ":Git commit<cr>")
+map("", "<leader>gr", ":Git reset head<cr>")
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
