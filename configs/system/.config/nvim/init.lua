@@ -335,11 +335,13 @@ end
 
 function FixPrevError()
   vim.diagnostic.goto_prev()
+  vim.api.nvim_feedkeys("zz", "n", true)
   vim.lsp.buf.code_action()
 end
 
 function FixNextError()
   vim.diagnostic.goto_next()
+  vim.api.nvim_feedkeys("zz", "n", true)
   vim.lsp.buf.code_action()
 end
 
