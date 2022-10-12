@@ -78,7 +78,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - --no-rehash --path)"
 
-# export PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH" # yarn global binaries
+export PATH="$(yarn global bin):$PATH"
 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
 export PATH=$HOME/Workspace/bin:$PATH
