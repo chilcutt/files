@@ -350,4 +350,10 @@ nmap("<leader>LA", "<cmd>lua vim.lsp.buf.code_action()<cr>") -- Trigger code act
 nmap("<leader>LP", "<cmd>lua FixPrevError()<cr>") -- Go to previous lsp issue and launch code action
 nmap("<leader>LN", "<cmd>lua FixNextError()<cr>") -- Go to next lsp issue and launch code action
 nmap("<leader>LC", "<cmd>lua toggleAutocomplete()<cr>") -- Toggle autocomplete
+nmap("<leader>LR", "<cmd>lua vim.lsp.buf.rename()<cr>") -- Rename references
+
+nmap("<leader>gd", "<cmd>lua vim.lsp.buf.definition()<cr>") -- Jump to definition (ctrl+t to go back)
+nmap("<leader>gr", "<cmd>lua vim.lsp.buf.references()<cr>") -- Open references
+
+nmap("<leader>K", "<cmd>lua vim.lsp.buf.hover()<cr>") -- Show hover documentation
 --------------------------------------------------------------------------------
