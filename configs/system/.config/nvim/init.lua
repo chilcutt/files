@@ -13,12 +13,20 @@ end
 require("packer").startup({function(use)
   use { "stevearc/packer.nvim", branch = "stevearc-git-env" } -- Package manager
 
+  use { "L3MON4D3/LuaSnip", requires = { "saadparwaiz1/cmp_luasnip" } }           -- Snippet Engine and Snippet Expansion
   use { "airblade/vim-gitgutter" }           -- display git status in signcolumn
   use { "altercation/vim-colors-solarized" } -- load solarized colorscheme
   use { "benmills/vimux" }                   -- integrate vim with tmux
+  use { "hrsh7th/cmp-buffer" } -- nvim-cmp completions for file buffer
+  use { "hrsh7th/cmp-nvim-lua" } -- nvim-cmp completions for nvim lua
+  use { "hrsh7th/cmp-path" } --nvim-cmp completions for file path
+  use { "hrsh7th/nvim-cmp", requires = { "hrsh7th/cmp-nvim-lsp" } }               -- Autocompletion
+  use { "jose-elias-alvarez/null-ls.nvim", requires = { 'nvim-lua/plenary.nvim' } }  -- connect non-lsp sources to lsp (e.g. prettier, eslint, etc.)
   use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
   use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
   use { "junegunn/fzf.vim" }                 -- better vim support for fzf
+  use { "neovim/nvim-lspconfig" }            -- Configurations for builtin lsp
+  use { "onsails/lspkind-nvim" }             -- Snazzy LSP icons (requires patched font)
   use { "tpope/vim-commentary" }             -- comment out blocks of lines
   use { "tpope/vim-fugitive" }               -- git integration
   use { "tpope/vim-rhubarb" }                -- github-specific git integration
@@ -121,9 +129,21 @@ nmap("<leader>j", "<C-w>j")
 nmap("<leader>k", "<C-w>k")
 nmap("<leader>l", "<C-w>l")
 
+nmap("<leader>n", ":n<cr>")
+nmap("<leader>N", ":N<cr>")
+nmap("<leader>cn", ":cnext<cr>")
+nmap("<leader>cp", ":cprevious<cr>")
+
 nmap("<leader>t", ":tabnew<cr>")
 
 nmap("<leader>F", ":Find<space>") -- Start fzf search of contents, TODO- swtich to CR?
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- vimux
+nmap("<leader>bb", ":VimuxCloseRunner<cr>")
+nmap("<leader>bc", ":VimuxPromptCommand<cr>")
+nmap("<leader>br", ":VimuxRunLastCommand<cr>")
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -154,10 +174,180 @@ map("", "<leader>gd", ":Git diff<cr>")
 map("", "<leader>gv", ":Gvdiffsplit<cr>")
 map("", "<leader>ga", ":Git add -p<cr>")
 map("", "<leader>gc", ":Git commit<cr>")
+map("", "<leader>gr", ":Git reset head<cr>")
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 -- vim-rhubarb
 map("", "<leader>go", ":GBrowse<cr>") -- open file in browser at Github, also works with visual mode
 map("", "<leader>gO", ":GBrowse <cword><cr>") -- open object in browser at Github, useful for commit sha
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- lsp config
+local autoformat_group = vim.api.nvim_create_augroup("LspAutoformat", { clear = true })
+
+-- Automatically format on save
+local on_attach = function(client, bufnr)
+  if
+    client.server_capabilities.documentFormattingProvider
+  then
+    -- Remove prior autocmds so this only triggers once
+    vim.api.nvim_clear_autocmds({
+      group = autoformat_group,
+      buffer = bufnr,
+    })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      callback = function()
+        vim.lsp.buf.format({
+          bufnr = bufnr
+        })
+      end,
+      group = autoformat_group,
+      buffer = bufnr,
+    })
+  end
+end
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- nvim-lspconfig
+local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+-- Set up typescript lsp
+require("lspconfig")["tsserver"].setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- null-ls.nvim
+local util = require("lspconfig.util")
+local function eslint_cwd(params)
+  return util.root_pattern(".eslintrc.*")(params.bufname)
+end
+
+local null_ls = require("null-ls")
+null_ls.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  sources = {
+    null_ls.builtins.formatting.prettierd,
+
+    null_ls.builtins.code_actions.eslint_d.with({
+      cwd = eslint_cwd
+    }),
+    null_ls.builtins.diagnostics.eslint_d.with({
+      cwd = eslint_cwd
+    }),
+    null_ls.builtins.formatting.eslint_d.with({
+      cwd = eslint_cwd
+    }),
+
+    null_ls.builtins.diagnostics.stylelint,
+    null_ls.builtins.formatting.stylelint,
+  },
+})
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- nvim-cmp, LuaSnip, lspkind-nvim
+local cmp = require("cmp")
+local luasnip = require("luasnip")
+require("luasnip.loaders.from_vscode").lazy_load()
+
+cmp.setup({
+  completion = {
+    autocomplete = false, -- Disable automatic autocomplete, use manual trigger
+  },
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ["<CR>"] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    }),
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      elseif cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
+  formatting = {
+    format = require("lspkind").cmp_format({
+      mode = "text",
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+      },
+    }),
+  },
+  sources = {
+    { name = "nvim_lua" }, -- Shows suggestions for lua
+    { name = "nvim_lsp" }, -- Shows suggestions based on the response of a language server
+    { name = "luasnip" }, -- Suggests available snippets and expands them if chosen
+    { name = "buffer", keyword_length = 5 }, -- Suggests words found in the current buffer
+  },
+})
+
+-- Toggle insert mode autocompletion on/off
+vim.g.nvim_cmp_autocomplete_enabled = false
+function toggleAutocomplete()
+  vim.g.nvim_cmp_autocomplete_enabled = not vim.g.nvim_cmp_autocomplete_enabled
+  if vim.g.nvim_cmp_autocomplete_enabled then
+    cmp.setup({
+      completion = {
+        autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged }
+      }
+    })
+  else
+    cmp.setup({
+      completion = {
+        autocomplete = false
+      }
+    })
+  end
+end
+
+function FixPrevError()
+  vim.diagnostic.goto_prev()
+  vim.api.nvim_feedkeys("zz", "n", true)
+  vim.lsp.buf.code_action()
+end
+
+function FixNextError()
+  vim.diagnostic.goto_next()
+  vim.api.nvim_feedkeys("zz", "n", true)
+  vim.lsp.buf.code_action()
+end
+
+map("i", "<C-Space>", "<cmd>lua require('cmp').complete()<cr>") -- Trigger completion in insert-mode with ctrl+space
+nmap("<leader>LA", "<cmd>lua vim.lsp.buf.code_action()<cr>") -- Trigger code action under cursor
+nmap("<leader>LP", "<cmd>lua FixPrevError()<cr>") -- Go to previous lsp issue and launch code action
+nmap("<leader>LN", "<cmd>lua FixNextError()<cr>") -- Go to next lsp issue and launch code action
+nmap("<leader>LC", "<cmd>lua toggleAutocomplete()<cr>") -- Toggle autocomplete
 --------------------------------------------------------------------------------
