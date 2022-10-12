@@ -313,6 +313,25 @@ cmp.setup({
   },
 })
 
+-- Toggle insert mode autocompletion on/off
+vim.g.nvim_cmp_autocomplete_enabled = false
+function toggleAutocomplete()
+  vim.g.nvim_cmp_autocomplete_enabled = not vim.g.nvim_cmp_autocomplete_enabled
+  if vim.g.nvim_cmp_autocomplete_enabled then
+    cmp.setup({
+      completion = {
+        autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged }
+      }
+    })
+  else
+    cmp.setup({
+      completion = {
+        autocomplete = false
+      }
+    })
+  end
+end
+
 function FixPrevError()
   vim.diagnostic.goto_prev()
   vim.lsp.buf.code_action()
@@ -327,4 +346,5 @@ map("i", "<C-Space>", "<cmd>lua require('cmp').complete()<cr>") -- Trigger compl
 nmap("<leader>LL", "<cmd>lua vim.lsp.buf.code_action()<cr>") -- Trigger code action under cursor
 nmap("<leader>LP", "<cmd>lua FixPrevError()<cr>") -- Go to previous lsp issue and launch code action
 nmap("<leader>LN", "<cmd>lua FixNextError()<cr>") -- Go to next lsp issue and launch code action
+nmap("<leader>LC", "<cmd>lua toggleAutocomplete()<cr>") -- Toggle autocomplete
 --------------------------------------------------------------------------------
