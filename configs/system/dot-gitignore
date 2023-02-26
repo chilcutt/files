@@ -13,6 +13,4 @@ tags
 config.json.master
 kyle.rake
 
-# Exclude Obsidian's settings (including plugin and hotkey configurations)
-.obsidian/
 .trash/

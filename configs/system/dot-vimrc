@@ -37,7 +37,7 @@ Plug 'tpope/vim-rails'                  " ruby on rails integration
 Plug 'tpope/vim-rake'                   " rake integration for non-rails ruby projects
 Plug 'tpope/vim-surround'               " surrounding movement
 Plug 'vim-scripts/matchit.zip'          " adds support for more % matches
-Plug 'w0rp/ale'                         " asynchronous linting
+" Plug 'w0rp/ale'                         " asynchronous linting
 Plug 'godlygeek/tabular'                " dependency for vim-markdown
 Plug 'plasticboy/vim-markdown'          " utilities for md files
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  } " preview support for markdown
@@ -229,29 +229,32 @@ nmap <leader>n :n<cr>
 nmap <leader>N :N<cr>
 nmap <leader>cn :cnext<cr>
 nmap <leader>cp :cprevious<cr>
-nmap <leader>ln :ALENext<cr>
-nmap <leader>lp :ALEPrevious<cr>
+" nmap <leader>ln :ALENext<cr>
+" nmap <leader>lp :ALEPrevious<cr>
 
 let g:vimrubocop_keymap = 0 " disable default mappings
 map <leader>R :RuboCop -a<cr>
 
 map <leader>P :PrettierAsync<cr>
 
-let g:ale_echo_msg_format = "%linter% %code: %%s"
-let g:ale_linters = {
-                  \   "javascript": ["eslint", "prettier", "flow-language-server"],
-                  \   "typescript": ["eslint", "tsserver"],
-                  \   "typescriptreact": ["eslint", "prettier"]
-                  \ }
-let g:ale_fixers = {
-                 \   "ruby": ["rubocop"],
-                 \   "javascript": ["eslint", "prettier"],
-                 \   "typescript": ["eslint", "prettier"],
-                 \   "typescriptreact": ["prettier"]
-                 \ }
-let g:ale_javascript_prettier_use_local_config = 1
-let g:ale_fix_on_save = 1 " automatically fix when saving
-let g:ale_completion_enabled = 0 " disable for now, its annoying
+""""""""""
+" KYLEDEBUG DISABLE ALE CONFIGURATION
+" let g:ale_echo_msg_format = "%linter% %code: %%s"
+" let g:ale_linters = {
+"                   \   "javascript": ["eslint", "prettier", "flow-language-server"],
+"                   \   "typescript": ["eslint", "tsserver"],
+"                   \   "typescriptreact": ["eslint", "prettier"]
+"                   \ }
+" let g:ale_fixers = {
+"                  \   "ruby": ["rubocop"],
+"                  \   "javascript": ["eslint", "prettier"],
+"                  \   "typescript": ["eslint", "prettier"],
+"                  \   "typescriptreact": ["prettier"]
+"                  \ }
+" let g:ale_javascript_prettier_use_local_config = 1
+" let g:ale_fix_on_save = 1 " automatically fix when saving
+" let g:ale_completion_enabled = 0 " disable for now, its annoying
+""""""""""
 
 let s:javascript_debug_line = "debugger"
 let s:ruby_debug_line = "require 'pry'; binding.pry"

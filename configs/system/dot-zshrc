@@ -83,6 +83,9 @@ export PATH="$(yarn global bin):$PATH"
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
 export PATH=$HOME/Workspace/bin:$PATH
 
+# Add openssh bin to the path
+export PATH=$(brew --prefix openssh)/bin:$PATH
+
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.work_aliases ] && source $HOME/.work_aliases
 
