@@ -1,3 +1,7 @@
+if vim.g.vscode then
+  return
+end
+
 --------------------------------------------------------------------------------
 -- Install packer and plugins
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
@@ -31,6 +35,8 @@ require("packer").startup({function(use)
   use { "tpope/vim-fugitive" }               -- git integration
   use { "tpope/vim-rhubarb" }                -- github-specific git integration
   use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
+
+  use { 'git@git.corp.stripe.com:nms/nvim-lspconfig-stripe.git' } -- Stripe-specific LSP configs
 
   if is_bootstrap then
     require("packer").sync()
@@ -70,7 +76,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- Appearance
 --
 vim.cmd("colorscheme solarized")
-vim.cmd("highlight ColorColumn ctermbg=black")
+vim.cmd("set background=light")
+vim.cmd("highlight ColorColumn ctermbg=lightgray")
 vim.cmd("let &colorcolumn=join(range(81,999),',')")
 
 -- Workaround a problem with solarized and vim-gitgutter.
@@ -144,6 +151,57 @@ nmap("<leader>F", ":Find<space>") -- Start fzf search of contents, TODO- swtich 
 nmap("<leader>bb", ":VimuxCloseRunner<cr>")
 nmap("<leader>bc", ":VimuxPromptCommand<cr>")
 nmap("<leader>br", ":VimuxRunLastCommand<cr>")
+
+-- local ruby_runner = "bundle exec rspec"
+local ruby_runner = "pay test"
+-- local javascript_runner = "yarn run jest"
+local javascript_runner = "pay js:run jest"
+local javascript_debug_runner = "node --inspect-brk node_modules/.bin/jest --runInBand"
+
+local javascript_filetypes = {
+  javascript = true,
+  typescript = true,
+  typescriptreact = true,
+}
+
+function RunTestFile()
+  if javascript_filetypes[vim.bo.filetype] then
+    vim.cmd([[call VimuxRunCommand("]] .. javascript_runner .. [[" . " " . bufname("%"))]])
+  elseif vim.bo.filetype == "ruby" then
+    vim.cmd([[call VimuxRunCommand("]] .. ruby_runner .. [[" . " " . bufname("%"))]])
+  end
+end
+
+nmap("<leader>rf", "<cmd>lua RunTestFile()<cr>")
+
+function RunTestLine()
+  if javascript_filetypes[vim.bo.filetype] then
+    vim.cmd([[call VimuxRunCommand("]] .. javascript_runner .. [[" . " " . bufname("%"))]])
+  elseif vim.bo.filetype == "ruby" then
+    vim.cmd([[call VimuxRunCommand("]] .. ruby_runner .. [[" . " " . bufname("%") . " -l " . line("."))]])
+  end
+end
+
+nmap("<leader>rs", "<cmd>lua RunTestLine()<cr>")
+-- local function RunTestLine
+--   if &filetype ==# "javascript"
+--     call VimuxRunCommand(s:javascript_runner . " " . bufname("%"))
+--   elseif &filetype ==# "ruby"
+--     call VimuxRunCommand(s:ruby_runner . " " . bufname("%") . ":" . line("."))
+--   endif
+-- endfunction
+
+-- function RunTestDebugger()
+--   if &filetype ==# "javascript"
+--     call VimuxRunCommand(s:javascript_debug_runner . " " . bufname("%"))
+--   endif
+-- endfunction
+
+-- function RunTestWatch()
+--   if &filetype ==# "javascript"
+--     call VimuxRunCommand(s:javascript_runner . " " . bufname("%") . " --watch")
+--   endif
+-- endfunction
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -175,6 +233,8 @@ map("", "<leader>GV", ":Gvdiffsplit<cr>")
 map("", "<leader>GA", ":Git add -p<cr>")
 map("", "<leader>GC", ":Git commit<cr>")
 map("", "<leader>GR", ":Git reset head<cr>")
+-- TODO - create command to create a new branch
+-- https://alpha2phi.medium.com/neovim-for-beginners-user-interface-568879ecfd6d
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
@@ -218,6 +278,19 @@ local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protoco
 require("lspconfig")["tsserver"].setup({
   on_attach = on_attach,
   capabilities = capabilities,
+})
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+-- nvim-lspconfig-stripe
+require("lspconfig_stripe")
+
+require("lspconfig").payserver_sorbet.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 200,
+  },
 })
 --------------------------------------------------------------------------------
 
