@@ -121,3 +121,8 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 alias hubfwd='(trap "kill 0" SIGINT; ssh -v -NL  10080:hubble-srv-kube.service.envoy:10080 "$(pay --host-type mydata-standard show-host)" & ssh -v -N -R "5442:localhost:10080" "$(pay --host-type qa-mydev show-host)")'
 
 # export PAY_HOST_TYPE=mydata-big
+#
+### BEGIN APIORI GO
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
+### END APIORI GO
