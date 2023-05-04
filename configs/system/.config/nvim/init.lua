@@ -119,6 +119,7 @@ end
 
 vim.g.mapleader = " " -- Set leader to spacebar
 nmap("<leader>w", ":w<cr>")
+nmap("<leader>W", ":noautocmd w<cr>") -- Save without formatting
 nmap("<leader>q", ":q<cr>")
 nmap("<leader>x", ":x<cr>")
 nmap("<leader>o", "o<esc>")
