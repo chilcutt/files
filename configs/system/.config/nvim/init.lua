@@ -1,3 +1,7 @@
+if vim.g.vscode then
+  return
+end
+
 --------------------------------------------------------------------------------
 -- Install packer and plugins
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
