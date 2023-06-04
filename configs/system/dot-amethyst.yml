@@ -5,10 +5,10 @@
 
 # layouts - Ordered list of layouts to use by layout key.
 layouts:
-  - tall
-  - two-pane
-  - fullscreen
   - middle-wide
+  - two-pane
+  - tall
+  - fullscreen
 
 # First mod (default option + shift).
 mod1:
