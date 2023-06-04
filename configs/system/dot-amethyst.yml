@@ -1,37 +1,14 @@
-# Default settings for amethyst
-# Repo: `https://github.com/ianyh/Amethyst`
-#
-# Note due to issue 1419 (https://github.com/ianyh/Amethyst/issues/1419) some
-# config values may conflict and not work if they are the same as the default
-# values for amathyst. You can see these values on github at
-# https://github.com/ianyh/Amethyst/blob/development/Amethyst/default.amethyst
-# If you're experiencing conflicts and the settings are the same as the default,
-# comment out the commands in this file.
-#
 # Move this file to: `~/.amethyst.yml`
 # In order to register changes restart Amethyst.
 # If you experience issues pulling in the changes you can also quit Amethyst and run: `defaults delete com.amethyst.Amethyst.plist`
 # This removes the current preferences and causes Amethyst to restart with default preferences and pull configs from this file.
 
-# layouts - Ordered list of layouts to use by layout key (default tall, wide, fullscreen, and column).
+# layouts - Ordered list of layouts to use by layout key.
 layouts:
   - tall
+  - two-pane
   - fullscreen
-  # - tall-right
-  - wide
-  # - two-pane
-  # - middle-wide
-  # - 3column-left
-  # - 3column-middle
-  # - 3column-right
-  # - 4column-left
-  # - 4column-right
-  - column
-  # - row
-  # - floating
-  # - widescreen-tall
-  # - widescreen-tall-right
-  # - bsp
+  - middle-wide
 
 # First mod (default option + shift).
 mod1:
@@ -90,23 +67,6 @@ decrease-main:
   mod: mod1
   key: "."
 
-# General purpose command for custom layouts. Functionality is layout-dependent.
-# command1:
-#   mod: <NONE>
-#   key: <NONE>
-# General purpose command for custom layouts. Functionality is layout-dependent.
-# command2:
-#   mod: <NONE>
-#   key: <NONE>
-# General purpose command for custom layouts. Functionality is layout-dependent.
-# command3:
-#   mod: <NONE>
-#   key: <NONE>
-# General purpose command for custom layouts. Functionality is layout-dependent.
-# command4:
-#   mod: <NONE>
-#   key: <NONE>
-
 # Focus the next window in the list going counter-clockwise.
 focus-ccw:
   mod: mod1
@@ -121,26 +81,6 @@ focus-cw:
 focus-main:
   mod: mod1
   key: m
-
-# Focus the next screen in the list going counter-clockwise.
-focus-screen-ccw:
-  mod: mod1
-  key: p
-
-# Focus the next screen in the list going clockwise.
-focus-screen-cw:
-  mod: mod1
-  key: n
-
-# Move the currently focused window onto the next screen in the list going counter-clockwise.
-swap-screen-ccw:
-  mod: mod2
-  key: h
-
-# Move the currently focused window onto the next screen in the list going clockwise.
-swap-screen-cw:
-  mod: mod2
-  key: l
 
 # Swap the position of the currently focused window with the next window in the list going counter-clockwise.
 swap-ccw:
@@ -157,49 +97,40 @@ swap-main:
   mod: mod1
   key: enter
 
-# Move focus to the n-th screen in the list; e.g., focus-screen-3 will move mouse focus to the 3rd screen. Note that the main window in the given screen will be focused.
-#focus-screen-n:
-# focus-screen-<screen-number>:
-#   mod: mod1
-#   key: y
-# Move the currently focused window to the n-th screen; e.g., throw-screen-3 will move the window to the 3rd screen.
-# throw-screen-n:
-# throw-screen-<screen-number>:
-#   mod: mod1
-#   key: u
-# Move the currently focused window to the n-th space; e.g., throw-space-3 will move the window to the 3rd space.
-# throw-space-<screen-number>:
-#   mod: mod1
-#   key: i
-
 # Select tall layout
 select-tall-layout:
   mod: mod1
   key: a
 
 # Select wide layout
+# NOTE - redefine wide layout as something else so we can use the "s" key.
 select-wide-layout:
+  mod: mod1
+  key: q
+
+# Select two-pane layout
+select-two-pane-layout:
   mod: mod1
   key: s
 
-# Select fullscreen layout
-select-fullscreen-layout:
+# Select 3column-middle layout
+select-middle-wide-layout:
   mod: mod1
   key: d
 
-# Select column layout
-select-column-layout:
+# Select fullscreen layout
+select-fullscreen-layout:
   mod: mod1
   key: f
 
 # Move the currently focused window to the space to the left.
 throw-space-left:
-  mod: mod2
+  mod: mod1
   key: left
 
 # Move currently the focused window to the space to the right.
 throw-space-right:
-  mod: mod2
+  mod: mod1
   key: right
 
 # Toggle the floating state of the currently focused window; i.e., if it was floating make it tiled and if it was tiled make it floating.
@@ -233,10 +164,10 @@ relaunch-amethyst:
   key: z
 
 # disable screen padding on in-built display
-disable-screen-padding-on-inbuilt: false
+disable-screen-padding-on-inbuilt: true
 
 # Boolean flag for whether or not to add margins betwen windows (default false).
-window-margins: false
+window-margins: true
 
 # Boolean flag for whether or not to set window margins if there is only one window on the screen, assuming window margins are enabled (default false).
 smart-window-margins: false
@@ -245,7 +176,7 @@ smart-window-margins: false
 # window-margins: true
 # window-margin-size: 5
 # The size of the margins between windows (in px, default 0).
-window-margin-size: 0
+window-margin-size: 8
 
 # The max number of windows that may be visible on a screen at one time before
 # additional windows are minimized. A value of 0 disables the feature.
@@ -279,7 +210,7 @@ focus-follows-mouse: false
 mouse-swaps-windows: false
 
 # true if changing the frame of a window with the mouse should update the layout to accommodate the change (default false). Note that not all layouts will be able to respond to the change.
-mouse-resizes-windows: false
+mouse-resizes-windows: true
 
 # true to display the name of the layout when a new layout is selected (default true).
 enables-layout-hud: true
