@@ -39,3 +39,20 @@ alias vim='nvim'
 alias clear-dns-cache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 
 alias builds='watch -c pay ci:status'
+
+kchilcutt-remote() {
+  pay remote new \
+    kchilcutt-remote \
+    --host-type=qa-mydev-big \
+    --repo=stripe-internal/pay-server:master-passing-tests \
+    --service=manage \
+    --service=manage_ui_metro \
+    --service=books_orchestrator \
+    --service=admin \
+    --service=admin_metro \
+    --service=workflow_work_climate \
+    --service=scenarios_grpc \
+    --open-code \
+    --notify-on-ready \
+    --skip-confirm
+}
