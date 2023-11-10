@@ -74,7 +74,8 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 -- Appearance
 --
 vim.cmd("colorscheme solarized")
-vim.cmd("highlight ColorColumn ctermbg=black")
+vim.cmd("set background=light")
+vim.cmd("highlight ColorColumn ctermbg=lightgray")
 vim.cmd("let &colorcolumn=join(range(81,999),',')")
 
 -- Workaround a problem with solarized and vim-gitgutter.
@@ -116,6 +117,7 @@ end
 
 vim.g.mapleader = " " -- Set leader to spacebar
 nmap("<leader>w", ":w<cr>")
+nmap("<leader>W", ":noautocmd w<cr>") -- Save without formatting
 nmap("<leader>q", ":q<cr>")
 nmap("<leader>x", ":x<cr>")
 nmap("<leader>o", "o<esc>")
@@ -179,6 +181,8 @@ map("", "<leader>GV", ":Gvdiffsplit<cr>")
 map("", "<leader>GA", ":Git add -p<cr>")
 map("", "<leader>GC", ":Git commit<cr>")
 map("", "<leader>GR", ":Git reset head<cr>")
+-- TODO - create command to create a new branch
+-- https://alpha2phi.medium.com/neovim-for-beginners-user-interface-568879ecfd6d
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
