@@ -150,6 +150,57 @@ nmap("<leader>F", ":Find<space>") -- Start fzf search of contents, TODO- swtich 
 nmap("<leader>bb", ":VimuxCloseRunner<cr>")
 nmap("<leader>bc", ":VimuxPromptCommand<cr>")
 nmap("<leader>br", ":VimuxRunLastCommand<cr>")
+
+-- local ruby_runner = "bundle exec rspec"
+local ruby_runner = "pay test"
+-- local javascript_runner = "yarn run jest"
+local javascript_runner = "pay js:run jest"
+local javascript_debug_runner = "node --inspect-brk node_modules/.bin/jest --runInBand"
+
+local javascript_filetypes = {
+  javascript = true,
+  typescript = true,
+  typescriptreact = true,
+}
+
+function RunTestFile()
+  if javascript_filetypes[vim.bo.filetype] then
+    vim.cmd([[call VimuxRunCommand("]] .. javascript_runner .. [[" . " " . bufname("%"))]])
+  elseif vim.bo.filetype == "ruby" then
+    vim.cmd([[call VimuxRunCommand("]] .. ruby_runner .. [[" . " " . bufname("%"))]])
+  end
+end
+
+nmap("<leader>rf", "<cmd>lua RunTestFile()<cr>")
+
+function RunTestLine()
+  if javascript_filetypes[vim.bo.filetype] then
+    vim.cmd([[call VimuxRunCommand("]] .. javascript_runner .. [[" . " " . bufname("%"))]])
+  elseif vim.bo.filetype == "ruby" then
+    vim.cmd([[call VimuxRunCommand("]] .. ruby_runner .. [[" . " " . bufname("%") . " -l " . line("."))]])
+  end
+end
+
+nmap("<leader>rs", "<cmd>lua RunTestLine()<cr>")
+-- local function RunTestLine
+--   if &filetype ==# "javascript"
+--     call VimuxRunCommand(s:javascript_runner . " " . bufname("%"))
+--   elseif &filetype ==# "ruby"
+--     call VimuxRunCommand(s:ruby_runner . " " . bufname("%") . ":" . line("."))
+--   endif
+-- endfunction
+
+-- function RunTestDebugger()
+--   if &filetype ==# "javascript"
+--     call VimuxRunCommand(s:javascript_debug_runner . " " . bufname("%"))
+--   endif
+-- endfunction
+
+-- function RunTestWatch()
+--   if &filetype ==# "javascript"
+--     call VimuxRunCommand(s:javascript_runner . " " . bufname("%") . " --watch")
+--   endif
+-- endfunction
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
