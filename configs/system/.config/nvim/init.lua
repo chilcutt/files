@@ -16,7 +16,7 @@ vim.g.mapleader = " " -- Set leader to spacebar
 vim.g.maplocalleader = " " -- Set leader to spacebar
 
 require("lazy").setup({
-  'git@git.corp.stripe.com:nms/nvim-lspconfig-stripe.git' -- Stripe-specific LSP configs
+  { 'git@git.corp.stripe.com:nms/nvim-lspconfig-stripe.git' }, -- Stripe-specific LSP configs
   { "L3MON4D3/LuaSnip", dependencies = { "saadparwaiz1/cmp_luasnip" } },           -- Snippet Engine and Snippet Expansion
   "airblade/vim-gitgutter",           -- display git status in signcolumn
   "altercation/vim-colors-solarized", -- load solarized colorscheme
