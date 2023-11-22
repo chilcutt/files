@@ -3,72 +3,38 @@ if vim.g.vscode then
 end
 
 --------------------------------------------------------------------------------
--- Install packer and plugins
-local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-local is_bootstrap = false
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  is_bootstrap = true
-  -- Waiting for https://github.com/wbthomason/packer.nvim/pull/1057
-  -- vim.fn.execute("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
-  vim.fn.execute("!git clone https://github.com/stevearc/packer.nvim --branch stevearc-git-env " .. install_path)
-  vim.cmd([[packadd packer.nvim]])
+-- Install lazyvim and plugins
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  -- bootstrap lazy.nvim
+  -- stylua: ignore
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
 end
+vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
-require("packer").startup({function(use)
-  use { "stevearc/packer.nvim", branch = "stevearc-git-env" } -- Package manager
+vim.g.mapleader = " " -- Set leader to spacebar
+vim.g.maplocalleader = " " -- Set leader to spacebar
 
-  use { "L3MON4D3/LuaSnip", requires = { "saadparwaiz1/cmp_luasnip" } }           -- Snippet Engine and Snippet Expansion
-  use { "airblade/vim-gitgutter" }           -- display git status in signcolumn
-  use { "altercation/vim-colors-solarized" } -- load solarized colorscheme
-  use { "benmills/vimux" }                   -- integrate vim with tmux
-  use { "hrsh7th/cmp-buffer" } -- nvim-cmp completions for file buffer
-  use { "hrsh7th/cmp-nvim-lua" } -- nvim-cmp completions for nvim lua
-  use { "hrsh7th/cmp-path" } --nvim-cmp completions for file path
-  use { "hrsh7th/nvim-cmp", requires = { "hrsh7th/cmp-nvim-lsp" } }               -- Autocompletion
-  use { "jose-elias-alvarez/null-ls.nvim", requires = { 'nvim-lua/plenary.nvim' } }  -- connect non-lsp sources to lsp (e.g. prettier, eslint, etc.)
-  use { "jremmen/vim-ripgrep" }              -- integration with ripgrep, support for :Rg
-  use { "junegunn/fzf" }                     --  base fzf integration repository, required by fzf.vim
-  use { "junegunn/fzf.vim" }                 -- better vim support for fzf
-  use { "neovim/nvim-lspconfig" }            -- Configurations for builtin lsp
-  use { "onsails/lspkind-nvim" }             -- Snazzy LSP icons (requires patched font)
-  use { "tpope/vim-commentary" }             -- comment out blocks of lines
-  use { "tpope/vim-fugitive" }               -- git integration
-  use { "tpope/vim-rhubarb" }                -- github-specific git integration
-  use { "vim-scripts/ZoomWin" }              -- ctrl+w o to zoom
-
-  use { 'git@git.corp.stripe.com:nms/nvim-lspconfig-stripe.git' } -- Stripe-specific LSP configs
-
-  if is_bootstrap then
-    require("packer").sync()
-  end
-end, config = {
-  git = {
-    env = {
-      -- This is required to make git operations work on remote devboxes
-      GIT_CONFIG_NOSYSTEM = "1"
-    }
-  }
-}})
-
--- When we are bootstrapping a configuration, it doesn't
--- make sense to execute the rest of the init.lua.
---
--- Restart nvim, and then it will work.
-if is_bootstrap then
-  print("==================================")
-  print("    Plugins are being installed")
-  print("    Wait until Packer completes,")
-  print("       then restart nvim")
-  print("==================================")
-  return
-end
-
--- Automatically source and re-compile packer whenever you save this init.lua
-local packer_group = vim.api.nvim_create_augroup("Packer", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-  command = "source <afile> | PackerCompile",
-  group = packer_group,
-  pattern = vim.fn.expand("$MYVIMRC"),
+require("lazy").setup({
+  'git@git.corp.stripe.com:nms/nvim-lspconfig-stripe.git' -- Stripe-specific LSP configs
+  { "L3MON4D3/LuaSnip", dependencies = { "saadparwaiz1/cmp_luasnip" } },           -- Snippet Engine and Snippet Expansion
+  "airblade/vim-gitgutter",           -- display git status in signcolumn
+  "altercation/vim-colors-solarized", -- load solarized colorscheme
+  "benmills/vimux",                   -- integrate vim with tmux
+  "hrsh7th/cmp-buffer", -- nvim-cmp completions for file buffer
+  "hrsh7th/cmp-nvim-lua", -- nvim-cmp completions for nvim lua
+  "hrsh7th/cmp-path", --nvim-cmp completions for file path
+  { "hrsh7th/nvim-cmp", dependencies = { "hrsh7th/cmp-nvim-lsp" } },               -- Autocompletion
+  { "jose-elias-alvarez/null-ls.nvim", dependencies = { 'nvim-lua/plenary.nvim' } },  -- connect non-lsp sources to lsp (e.g. prettier, eslint, etc.)
+  "jremmen/vim-ripgrep",              -- integration with ripgrep, support for :Rg
+  "junegunn/fzf",                     --  base fzf integration repository, required by fzf.vim
+  "junegunn/fzf.vim",                 -- better vim support for fzf
+  "neovim/nvim-lspconfig",            -- Configurations for builtin lsp
+  "onsails/lspkind-nvim",             -- Snazzy LSP icons (requires patched font)
+  "tpope/vim-commentary",             -- comment out blocks of lines
+  "tpope/vim-fugitive",               -- git integration
+  "tpope/vim-rhubarb",                -- github-specific git integration
+  "vim-scripts/ZoomWin",              -- ctrl+w o to zoom
 })
 --------------------------------------------------------------------------------
 
@@ -117,7 +83,6 @@ function nmap(shortcut, command)
   map("n", shortcut, command)
 end
 
-vim.g.mapleader = " " -- Set leader to spacebar
 nmap("<leader>w", ":w<cr>")
 nmap("<leader>W", ":noautocmd w<cr>") -- Save without formatting
 nmap("<leader>q", ":q<cr>")
@@ -273,7 +238,7 @@ end
 
 --------------------------------------------------------------------------------
 -- nvim-lspconfig
-local capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- Set up typescript lsp
 require("lspconfig")["tsserver"].setup({

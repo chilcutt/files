@@ -118,6 +118,13 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
+# bun completions
+[ -s "/Users/kyle/.bun/_bun" ] && source "/Users/kyle/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
 alias hubfwd='(trap "kill 0" SIGINT; ssh -v -NL  10080:hubble-srv-kube.service.envoy:10080 "$(pay --host-type mydata-standard show-host)" & ssh -v -N -R "5442:localhost:10080" "$(pay --host-type qa-mydev show-host)")'
 
 # export PAY_HOST_TYPE=mydata-big

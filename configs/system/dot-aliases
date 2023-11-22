@@ -37,6 +37,7 @@ alias vim='nvim'
 [ -n `which pkill` ] && alias logout_user='pkill -KILL -u'
 
 alias clear-dns-cache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
+alias obsidian='cd $HOME/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents'
 
 alias builds='watch -c pay ci:status'
 
