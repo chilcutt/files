@@ -1,5 +1,17 @@
-if vim.g.vscode then
-  return
+local LogLevel = {
+  DEBUG = 1,
+  INFO = 2,
+  WARN = 3,
+  ERROR = 4,
+  NONE = 5  -- To turn off logging
+}
+
+local currentLogLevel = LogLevel.ERROR
+
+local function log(level, message)
+  if level >= currentLogLevel then
+    print(os.date("%Y-%m-%d %H:%M:%S") .. " [" .. level .. "]: " .. message)
+  end
 end
 
 --------------------------------------------------------------------------------
@@ -14,6 +26,36 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 vim.g.mapleader = " " -- Set leader to spacebar
 vim.g.maplocalleader = " " -- Set leader to spacebar
+
+function map(mode, shortcut, command)
+  vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
+end
+
+function nmap(shortcut, command)
+  map("n", shortcut, command)
+end
+
+if vim.g.vscode then
+  log(LogLevel.DEBUG, "Loading VSCode config")
+
+  -- Write and format from leader-w
+  function writeAndFormat()
+    log(LogLevel.DEBUG, "Start writeAndFormat")
+    require('vscode-neovim').action("editor.action.formatDocument")
+    vim.cmd("Write")
+    log(LogLevel.DEBUG, "End writeAndFormat")
+  end
+  vim.api.nvim_create_user_command("WriteAndFormat", "lua writeAndFormat()", {})
+  nmap("<leader>w", '<cmd>WriteAndFormat<cr>')
+
+  nmap("<leader>v", '<cmd>:Vsplit<cr>')
+  nmap("<leader>q", '<cmd>:Quit<cr>')
+
+  -- Easy command to reload config without reloading plugin
+  vim.api.nvim_create_user_command("ReloadInit", ":luafile ~/.config/nvim/init.lua", {})
+
+  return
+end
 
 
 require("lazy").setup({
