@@ -27,12 +27,16 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 vim.g.mapleader = " " -- Set leader to spacebar
 vim.g.maplocalleader = " " -- Set leader to spacebar
 
-function map(mode, shortcut, command)
+function map_cmd(mode, shortcut, command)
   vim.api.nvim_set_keymap(mode, shortcut, command, { noremap = true, silent = true })
 end
 
+function map(shortcut, command)
+  map_cmd("", shortcut, command)
+end
+
 function nmap(shortcut, command)
-  map("n", shortcut, command)
+  map_cmd("n", shortcut, command)
 end
 
 if vim.g.vscode then
@@ -53,6 +57,12 @@ if vim.g.vscode then
 
   -- Easy command to reload config without reloading plugin
   vim.api.nvim_create_user_command("ReloadInit", ":luafile ~/.config/nvim/init.lua", {})
+
+  -- Rename symbol
+  map("<leader>R", "<cmd>call VSCodeNotify('editor.action.rename')<cr>");
+
+  -- Refactor selection
+  map("<leader>r", "<cmd>call VSCodeNotify('editor.action.refactor')<cr>");
 
   return
 end
