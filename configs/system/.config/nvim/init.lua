@@ -94,9 +94,13 @@ require("lazy").setup({
 -- Appearance
 --
 vim.cmd("colorscheme solarized")
-vim.cmd("set background=light")
-vim.cmd("highlight ColorColumn ctermbg=lightgray")
 vim.cmd("let &colorcolumn=join(range(81,999),',')")
+
+-- For iterm2 ~3.5, the terminal should manage the background. For lower
+-- versions uncomment the below to manually set colors.
+--
+-- vim.cmd("set background=light")
+-- vim.cmd("highlight ColorColumn ctermbg=lightgray")
 
 -- Workaround a problem with solarized and vim-gitgutter.
 -- https://github.com/airblade/vim-gitgutter/issues/696
