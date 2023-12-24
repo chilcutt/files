@@ -34,6 +34,9 @@ setopt hist_ignore_all_dups
 # Do not add commands starting with a space to history.
 setopt hist_ignore_space
 
+# Always read and write from history file
+setopt share_history
+
 bindkey -e
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -59,10 +62,6 @@ if [ "$TERM_PROGRAM" = "vscode" ]; then
 else
   export GIT_EDITOR=nvim
 fi
-
-
-# allow multiple terminals to write to history
-# shopt -s histappend
 
 # automatically spelling correct when changing directory
 # shopt -s cdspell
