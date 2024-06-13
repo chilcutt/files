@@ -35,6 +35,7 @@
 	show-files = diff-tree --no-commit-id --name-only -r
 	sub = submodule update --init --recursive
 	latest-main = !git fetch origin main:main && git checkout main
+	update-main = !git fetch origin main:main
 	recent = !git reflog | egrep -io 'moving from ([^[:space:]]+)' | awk '{ print $3 }' | awk ' !x[$0]++' | egrep -v '^[a-f0-9]{40}$' | head -n10
 [github]
 	user = chilcutt
