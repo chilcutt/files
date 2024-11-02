@@ -1,3 +1,7 @@
+if vim.g.vscode then
+  return
+end
+
 local LogLevel = {
   DEBUG = 1,
   INFO = 2,
