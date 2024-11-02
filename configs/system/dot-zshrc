@@ -52,7 +52,6 @@ export HISTFILESIZE=10000 # unlimited history
 export EDITOR=nvim
 export VISUAL=nvim
 export SVN_EDITOR=nvim
-export JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
 export INPUTRC=$HOME/.inputrc
 export CLICOLOR=1
 
@@ -88,6 +87,8 @@ export PATH="$(yarn global bin):$PATH"
 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex"
 export PATH=$HOME/Workspace/bin:$PATH
+
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
 
 [ -f $HOME/.aliases ] && source $HOME/.aliases
 [ -f $HOME/.work_aliases ] && source $HOME/.work_aliases
