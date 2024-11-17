@@ -76,7 +76,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup({
   { "L3MON4D3/LuaSnip", dependencies = { "saadparwaiz1/cmp_luasnip" } },           -- Snippet Engine and Snippet Expansion
   "airblade/vim-gitgutter",           -- display git status in signcolumn
-  "altercation/vim-colors-solarized", -- load solarized colorscheme
+  "lifepillar/vim-solarized8", -- load alternative solarized colorscheme
   "benmills/vimux",                   -- integrate vim with tmux
   "hrsh7th/cmp-buffer", -- nvim-cmp completions for file buffer
   "hrsh7th/cmp-nvim-lua", -- nvim-cmp completions for nvim lua
@@ -98,7 +98,7 @@ require("lazy").setup({
 --------------------------------------------------------------------------------
 -- Appearance
 --
-vim.cmd("colorscheme solarized")
+vim.cmd("colorscheme solarized8")
 vim.cmd("let &colorcolumn=join(range(81,999),',')")
 
 -- For iterm2 ~3.5, the terminal should manage the background. For lower
