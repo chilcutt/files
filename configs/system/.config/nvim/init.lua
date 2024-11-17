@@ -49,6 +49,16 @@ if vim.g.vscode then
   vim.api.nvim_create_user_command("WriteAndFormat", "lua writeAndFormat()", {})
   nmap("<leader>w", '<cmd>WriteAndFormat<cr>')
 
+  -- Write without format from leader-W
+  function writeNoFormat()
+    local vscode = require('vscode')
+    log(LogLevel.DEBUG, "Start writeNoFormat")
+    vscode.action("workbench.action.files.saveWithoutFormatting")
+    log(LogLevel.DEBUG, "End writeNoFormat")
+  end
+  vim.api.nvim_create_user_command("WriteNoFormat", "lua writeNoFormat()", {})
+  nmap("<leader>W", '<cmd>WriteNoFormat<cr>')
+
   nmap("<leader>v", '<cmd>:Vsplit<cr>')
   nmap("<leader>q", '<cmd>:Quit<cr>')
 
