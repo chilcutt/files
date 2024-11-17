@@ -40,9 +40,10 @@ if vim.g.vscode then
 
   -- Write and format from leader-w
   function writeAndFormat()
+    local vscode = require('vscode')
     log(LogLevel.DEBUG, "Start writeAndFormat")
-    require('vscode-neovim').action("editor.action.formatDocument")
-    vim.cmd("Write")
+    vscode.action("editor.action.formatDocument")
+    vscode.action("workbench.action.files.save")
     log(LogLevel.DEBUG, "End writeAndFormat")
   end
   vim.api.nvim_create_user_command("WriteAndFormat", "lua writeAndFormat()", {})
