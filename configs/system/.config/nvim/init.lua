@@ -1,7 +1,5 @@
-if vim.g.vscode then
-  return
-end
-
+--------------------------------------------------------------------------------
+--- Configure better logging
 local LogLevel = {
   DEBUG = 1,
   INFO = 2,
@@ -19,15 +17,7 @@ local function log(level, message)
 end
 
 --------------------------------------------------------------------------------
--- Install lazyvim and plugins
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  -- bootstrap lazy.nvim
-  -- stylua: ignore
-  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
-end
-vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
-
+--- Global configs and functions
 vim.g.mapleader = " " -- Set leader to spacebar
 vim.g.maplocalleader = " " -- Set leader to spacebar
 
@@ -43,6 +33,8 @@ function nmap(shortcut, command)
   map_cmd("n", shortcut, command)
 end
 
+--------------------------------------------------------------------------------
+--- VSCode config
 if vim.g.vscode then
   log(LogLevel.DEBUG, "Loading VSCode config")
 
@@ -71,6 +63,15 @@ if vim.g.vscode then
   return
 end
 
+--------------------------------------------------------------------------------
+-- Install lazyvim and plugins
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  -- bootstrap lazy.nvim
+  -- stylua: ignore
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
+end
+vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
 require("lazy").setup({
   { "L3MON4D3/LuaSnip", dependencies = { "saadparwaiz1/cmp_luasnip" } },           -- Snippet Engine and Snippet Expansion
