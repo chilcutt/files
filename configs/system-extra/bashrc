@@ -31,6 +31,9 @@ export INPUTRC=$HOME/.inputrc
 # For BSD/MacOS, `ls` will show colors if CLICOLORS is set.
 export CLICOLOR=1
 
+# Enable vi mode for bash
+set -o vi
+
 # allow multiple terminals to write to history
 shopt -s histappend
 
