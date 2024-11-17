@@ -38,3 +38,4 @@ alias vim='nvim'
 
 alias clear-dns-cache='sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder'
 alias obsidian='cd $HOME/Library/Mobile\ Documents/iCloud\~md\~obsidian/Documents'
+alias brew-update-all='brew update && brew upgrade && brew upgrade --cask --greedy'
