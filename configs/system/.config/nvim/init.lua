@@ -8,7 +8,7 @@ local LogLevel = {
   NONE = 5  -- To turn off logging
 }
 
-local currentLogLevel = LogLevel.ERROR
+local currentLogLevel = LogLevel.DEBUG
 
 local function log(level, message)
   if level >= currentLogLevel then
