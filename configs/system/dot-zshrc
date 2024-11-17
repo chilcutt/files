@@ -62,6 +62,9 @@ else
   export GIT_EDITOR=nvim
 fi
 
+# Set vi mode for shell editing
+set -o vi
+
 # automatically spelling correct when changing directory
 # shopt -s cdspell
 
